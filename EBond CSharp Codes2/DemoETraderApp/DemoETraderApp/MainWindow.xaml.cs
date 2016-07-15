@@ -154,6 +154,11 @@ namespace DemoETraderApp
 
             datagridblotter.ItemsSource = context;
         }
+
+        private void datagridblotter_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
 
