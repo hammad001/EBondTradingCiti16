@@ -8,7 +8,6 @@ namespace DemoETraderApp
 {
     public class BondClass
     {
-        //Amruta's edits
         public int bondId { get; set; }
         public string ISIN { get; set; }
         public DateTime purchaseDate { get; set; }
