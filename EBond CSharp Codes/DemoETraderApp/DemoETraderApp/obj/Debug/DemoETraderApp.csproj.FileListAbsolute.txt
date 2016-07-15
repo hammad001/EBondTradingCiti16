@@ -1,0 +1,14 @@
+c:\users\grad69\documents\visual studio 2015\Projects\DemoETraderApp\DemoETraderApp\bin\Debug\DemoETraderApp.exe.config
+c:\users\grad69\documents\visual studio 2015\Projects\DemoETraderApp\DemoETraderApp\bin\Debug\DemoETraderApp.exe
+c:\users\grad69\documents\visual studio 2015\Projects\DemoETraderApp\DemoETraderApp\bin\Debug\DemoETraderApp.pdb
+c:\users\grad69\documents\visual studio 2015\Projects\DemoETraderApp\DemoETraderApp\obj\Debug\MainWindow.g.cs
+c:\users\grad69\documents\visual studio 2015\Projects\DemoETraderApp\DemoETraderApp\obj\Debug\App.g.cs
+c:\users\grad69\documents\visual studio 2015\Projects\DemoETraderApp\DemoETraderApp\obj\Debug\DemoETraderApp_MarkupCompile.cache
+c:\users\grad69\documents\visual studio 2015\Projects\DemoETraderApp\DemoETraderApp\obj\Debug\DemoETraderApp_MarkupCompile.lref
+c:\users\grad69\documents\visual studio 2015\Projects\DemoETraderApp\DemoETraderApp\obj\Debug\MainWindow.baml
+c:\users\grad69\documents\visual studio 2015\Projects\DemoETraderApp\DemoETraderApp\obj\Debug\DemoETraderApp.g.resources
+c:\users\grad69\documents\visual studio 2015\Projects\DemoETraderApp\DemoETraderApp\obj\Debug\DemoETraderApp.Properties.Resources.resources
+c:\users\grad69\documents\visual studio 2015\Projects\DemoETraderApp\DemoETraderApp\obj\Debug\DemoETraderApp.csproj.GenerateResource.Cache
+c:\users\grad69\documents\visual studio 2015\Projects\DemoETraderApp\DemoETraderApp\obj\Debug\DemoETraderApp.exe
+c:\users\grad69\documents\visual studio 2015\Projects\DemoETraderApp\DemoETraderApp\obj\Debug\DemoETraderApp.pdb
+c:\users\grad69\documents\visual studio 2015\Projects\DemoETraderApp\DemoETraderApp\obj\Debug\DemoETraderApp.csprojResolveAssemblyReference.cache
