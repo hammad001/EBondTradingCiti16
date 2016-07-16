@@ -1,0 +1,26 @@
+﻿<Window x:Class="f1rst.Pagination"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:f1rst"
+        mc:Ignorable="d"
+        Title="Pagination" Height="400" Width="800">
+    <Grid>
+        <DataGrid x:Name="recordsTable" HorizontalAlignment="Left" Margin="73,21,0,0" VerticalAlignment="Top" Height="235" Width="636">
+
+
+        </DataGrid>
+        <TextBox x:Name="PagePrompt" VerticalAlignment="Bottom" BorderThickness="0" Background="Transparent" Height="23" TextWrapping="Wrap" Text="Page" IsEnabled="False" Margin="216,0,529,40"/>
+        <Button x:Name="previousPage" VerticalAlignment="Bottom" Content="Prev" Height="32" Click="previousPage_Click" Margin="73,0,669,69"/>
+        <Slider x:Name="PageNumber" Margin="128,0,364,68" VerticalAlignment="Bottom" Maximum="10" 
+                TickPlacement="TopLeft" TickFrequency="1" IsSnapToTickEnabled="True" Width="280" ValueChanged="PageNumber_ValueChanged" Height="33" />
+        <TextBox x:Name="PageVal" VerticalAlignment="Bottom" Height="23" TextWrapping="Wrap" Text="1" Margin="279,0,477,40" IsEnabled="False"/>
+        <Button x:Name="nextPage" VerticalAlignment="Bottom" Content="Next" Height="32" Click="nextPage_Click" Margin="435,0,307,69" RenderTransformOrigin="0.375,0.594"/>
+        <TextBox x:Name="recFrom" VerticalAlignment="Bottom" Background="Beige" Height="33" TextWrapping="Wrap" Text="From 1" IsEnabled="False" Margin="534,0,185,84"/>
+        <TextBox x:Name="recTo"  VerticalAlignment="Bottom" Background="Beige" Height="33" TextWrapping="Wrap" Text="To 15" IsEnabled="False" Margin="627,0,99,84"/>
+
+
+
+    </Grid>
+</Window>

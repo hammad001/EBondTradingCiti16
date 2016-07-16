@@ -18,7 +18,7 @@ public class BookedBond implements Serializable {
 
 	@Id
 	private int orderId;
-	private int bondId;
+	//private int bondId;
 	private char buySell;
 	private int quantity;
 	private Date purchaseDate;
@@ -33,7 +33,7 @@ public class BookedBond implements Serializable {
 
 	public BookedBond(int bondId, char buySell, int quantity, Date purchaseDate) {
 		super();
-		this.bondId = bondId;
+		//this.bondId = bondId;
 		this.buySell = buySell;
 		this.quantity = quantity;
 		this.purchaseDate = purchaseDate;
@@ -47,13 +47,13 @@ public class BookedBond implements Serializable {
 		this.orderId = orderId;
 	}
 
-	public int getBondId() {
+	/*public int getBondId() {
 		return bondId;
 	}
 
 	public void setBondId(int bondId) {
 		this.bondId = bondId;
-	}
+	}*/
 
 	public char getBuySell() {
 		return buySell;
