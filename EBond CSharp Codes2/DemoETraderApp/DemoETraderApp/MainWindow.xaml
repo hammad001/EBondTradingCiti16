@@ -47,10 +47,11 @@
                     <TextBox x:Name="LPto" HorizontalAlignment="Left" Height="21" Margin="418,114,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="41"/>
                     <Button x:Name="SerachBtn" Content="Search" HorizontalAlignment="Left" Height="33" Margin="490,105,0,0" VerticalAlignment="Top" Width="67" Click="BondListSetup"/>
                     <TextBox x:Name="yeildTo" HorizontalAlignment="Left" Height="21" Margin="148,104,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="48"/>
-                    <DataGrid x:Name="dataGridfrbonds" HorizontalAlignment="Left" Height="147" Margin="110,164,0,0" VerticalAlignment="Top" Width="464">
-
+                    <DataGrid x:Name="dataGridfrbonds" HorizontalAlignment="Left" Height="64" Margin="110,164,0,0" VerticalAlignment="Top" Width="464" Opacity="0" >
                     </DataGrid>
-                    <Button x:Name="compareButton" Content="Compare" HorizontalAlignment="Left" Margin="289,311,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False"/>
+                    <Button x:Name="compareButton" Content="Compare" HorizontalAlignment="Left" Margin="110,311,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False" Click="compareButton_Click"/>
+                    <DataGrid x:Name="dataGridForComparison" HorizontalAlignment="Left" Margin="110,233,0,0" VerticalAlignment="Top" Height="73" Width="464" Opacity="0" />
+                    <Button x:Name="clearButton" Content="Clear" HorizontalAlignment="Left" Margin="200,311,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False" Click="clearButton_Click"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="TBWTab" Header="&#xD;&#xA;TradeBooking&#xD;&#xA;Window" Margin="0,57,1,-92">
@@ -71,7 +72,7 @@
             </TabItem>
             <TabItem x:Name="TBlWTab" Header="&#xD;&#xA;TradeBlotting&#xD;&#xA; Window" Margin="0,95,0,-130" HorizontalAlignment="Left" Width="87" Height="87" VerticalAlignment="Top">
                 <Grid Background="#FFE5E5E5" Margin="0,0,0,-3">
-                    <TextBox  Width="163"  VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="SearchTermTextBox" Margin="10,0,0,329" />
+                    <TextBox  Width="163"  VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="SearchTermTextBox" Margin="10,0,0,329" TextChanged="SearchTermTextBox_TextChanged"/>
                     <TextBlock IsHitTestVisible="False" Text="Enter ISIN Here" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,329" Foreground="DarkGray" Height="22" Width="126">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
@@ -88,7 +89,6 @@
                     <DataGrid x:Name="datagridblotter" HorizontalAlignment="Left" Margin="0,27,0,0" VerticalAlignment="Top" Height="269" Width="584" AutoGenerateColumns="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="OrderId" Binding="{Binding OrderId}" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="ISIN" Binding="{Binding }" IsReadOnly="True"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="Populatebtn" Content="Populate" HorizontalAlignment="Left" Margin="237,301,0,0" VerticalAlignment="Top" Width="74" RenderTransformOrigin="0.054,1.955" Click="Populate"/>

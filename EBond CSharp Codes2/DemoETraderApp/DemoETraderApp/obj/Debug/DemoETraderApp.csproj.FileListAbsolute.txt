@@ -15,6 +15,7 @@ c:\users\grad69\documents\visual studio 2015\Projects\DemoETraderApp\DemoETrader
 C:\Users\Grad83\Downloads\EBondTradingCiti16-Sreenivas (4)\EBondTradingCiti16-Sreenivas\EBond CSharp Codes\DemoETraderApp\DemoETraderApp\bin\Debug\DemoETraderApp.exe.config
 C:\Users\Grad83\Downloads\EBondTradingCiti16-Sreenivas (4)\EBondTradingCiti16-Sreenivas\EBond CSharp Codes\DemoETraderApp\DemoETraderApp\bin\Debug\DemoETraderApp.exe
 C:\Users\Grad83\Downloads\EBondTradingCiti16-Sreenivas (4)\EBondTradingCiti16-Sreenivas\EBond CSharp Codes\DemoETraderApp\DemoETraderApp\bin\Debug\DemoETraderApp.pdb
+C:\Users\Grad83\Downloads\EBondTradingCiti16-Sreenivas (4)\EBondTradingCiti16-Sreenivas\EBond CSharp Codes\DemoETraderApp\DemoETraderApp\obj\Debug\DemoETraderApp.csprojResolveAssemblyReference.cache
 C:\Users\Grad83\Downloads\EBondTradingCiti16-Sreenivas (4)\EBondTradingCiti16-Sreenivas\EBond CSharp Codes\DemoETraderApp\DemoETraderApp\obj\Debug\MainWindow.g.cs
 C:\Users\Grad83\Downloads\EBondTradingCiti16-Sreenivas (4)\EBondTradingCiti16-Sreenivas\EBond CSharp Codes\DemoETraderApp\DemoETraderApp\obj\Debug\App.g.cs
 C:\Users\Grad83\Downloads\EBondTradingCiti16-Sreenivas (4)\EBondTradingCiti16-Sreenivas\EBond CSharp Codes\DemoETraderApp\DemoETraderApp\obj\Debug\DemoETraderApp_MarkupCompile.cache

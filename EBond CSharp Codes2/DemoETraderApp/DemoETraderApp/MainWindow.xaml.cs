@@ -24,7 +24,9 @@ namespace DemoETraderApp
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     /// 
-   
+
+
+
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -50,7 +52,9 @@ namespace DemoETraderApp
         private void selectbond(object sender, RoutedEventArgs e)
         {
             //int index = Bondslstbx.SelectedIndex;
-            
+
+            dataGridfrbonds.Opacity = 100;
+
             if (Bondslstbx.SelectedIndex == -1)
             {
                 MessageBox.Show("Please select a bond");               
@@ -180,6 +184,25 @@ namespace DemoETraderApp
             //           Blotter[] bookedbondlist = (Blotter[])serializer.ReadObject(blotterlist);
 
            datagridblotter.ItemsSource = context;
+        }
+
+        private void compareButton_Click(object sender, RoutedEventArgs e)
+        {
+            clearButton.IsEnabled = true;
+            dataGridForComparison.Opacity = 100;
+            EBond bond2 = (EBond)Bondslstbx.SelectedItem;
+            dataGridForComparison.ItemsSource = bondsetup(bond2);
+        }
+
+        private void SearchTermTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchTerm = SearchTermTextBox.Text;
+
+        }
+
+        private void clearButton_Click(object sender, RoutedEventArgs e)
+        {
+            dataGridForComparison.Opacity = 0;
         }
     }
 }
