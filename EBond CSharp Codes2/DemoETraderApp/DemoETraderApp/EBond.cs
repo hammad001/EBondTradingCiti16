@@ -11,7 +11,7 @@ using System.Runtime.Serialization.Json;
 namespace DemoETraderApp
 {
     [DataContract]
-    public class EBond
+   public class EBond
     {
         [DataMember]
         public int bondId { get; set; }
@@ -48,7 +48,7 @@ namespace DemoETraderApp
             char couponFrequency, string maturityDate, double lastPrice, double high, double low, double changeInPrice,
             double yeild, string creditRating, string currency)
         {
-
+            
             this.isin = isin;
             this.issueDate = issueDate;
             this.settlementDays = settlementDays;
@@ -68,11 +68,6 @@ namespace DemoETraderApp
         public override string ToString()
         {
             return string.Format(isin);
-        }
-
-        public EBond()
-        {
-
         }
     }
 }

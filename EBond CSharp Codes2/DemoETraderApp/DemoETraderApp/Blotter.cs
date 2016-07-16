@@ -29,7 +29,7 @@ namespace DemoETraderApp
         public string PurchaseDate { get; set; }
         //[DataMember]
         //public int FaceValue { get; set; }
-        
+
         //[DataMember]
         //public string Currency { get; set; }
         //[DataMember]
@@ -44,16 +44,16 @@ namespace DemoETraderApp
         //public string purchasedPrice { get; set; }
         [DataMember]
         public EBond blotterEBond { get; set; }
-        
 
-        public Blotter(int OrderId,  char BuySell, int Quantity, string PurchaseDate,   EBond blotterEBond
+
+        public Blotter(int OrderId, char BuySell, int Quantity, string PurchaseDate, EBond blotterEBond
             )
         {
             this.OrderId = OrderId;
-           // this.ISIN = ISIN;
+            // this.ISIN = ISIN;
             this.BuySell = BuySell;
             this.PurchaseDate = PurchaseDate;
-           // this.FaceValue = FaceValue;
+            // this.FaceValue = FaceValue;
             this.Quantity = Quantity;
             //this.Currency = Currency;
             //this.CouponRate = CouponRate;
@@ -69,11 +69,10 @@ namespace DemoETraderApp
         {
 
         }
-                
 
 
 
 
-        }
+
     }
-
+}
