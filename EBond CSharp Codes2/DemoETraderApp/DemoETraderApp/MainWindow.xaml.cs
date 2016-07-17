@@ -60,9 +60,10 @@ namespace DemoETraderApp
             }
             else
             {
-                dataGridfrbonds.Opacity = 100;
+                dataGridForComparison.Opacity = 100;
                 EBond sentebond = (EBond)Bondslstbx.SelectedItem;
-               dataGridfrbonds.ItemsSource= bondsetup(sentebond);
+                dataGridForComparison.ItemsSource = bondsetup(sentebond);
+//               dataGridfrbonds.ItemsSource= bondsetup(sentebond);
                //dataGridfrbonds.Items.Add(sentebond);
                 buttonfrBT.IsEnabled = true;
                 compareButton.IsEnabled = true;                
@@ -87,6 +88,7 @@ namespace DemoETraderApp
             // string msg = "{\"isin\":\"IN126\",\"bondName\":\"saleem\"}";
             // MessageBox.Show(CRfrom.Text);
            
+            
             string mdto = MDto.SelectedDate.Value.ToShortDateString();
             string searchstring = "{\"isin\":\"" + txtbxisin.Text + "\",\"couponRateFrom\":\"" + CRfrom.Text +
                 "\",\"couponRateTo\":\"" + CRto.Text + "\",\"frequency\":\"" + comboBoxFrequency.SelectedItem.ToString() +
@@ -108,7 +110,7 @@ namespace DemoETraderApp
             EBond[] EBonds = (EBond[])serializer.ReadObject(Ebondstream);
             //string help = "";
             Bondslstbx.Items.Clear();
-            dataGridfrbonds.ItemsSource = null;
+            dataGridForComparison.ItemsSource = null;
             foreach(EBond ebond in EBonds)
             {
                 Bondslstbx.Items.Add(ebond);
@@ -153,11 +155,6 @@ namespace DemoETraderApp
 
         }
 
-        private void compareBtn_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Ok");
-        }
-
         private void button_Click(object sender, RoutedEventArgs e)
         {
 
@@ -190,9 +187,8 @@ namespace DemoETraderApp
         {
             clearButton.IsEnabled = true;
             dataGridForComparison.Opacity = 100;
-            dataGridfrbonds.Opacity = 0;
 
-            EBond bond1 =  (EBond) dataGridfrbonds.Items.GetItemAt(0);
+            EBond bond1 =  (EBond)dataGridForComparison.Items.GetItemAt(0);
             EBond bond2 = (EBond)Bondslstbx.SelectedItem;
             List<EBond> compareList = new List<EBond>();
             compareList.Add(bond1);
@@ -208,7 +204,10 @@ namespace DemoETraderApp
 
         private void clearButton_Click(object sender, RoutedEventArgs e)
         {
-            dataGridForComparison.Opacity = 0;
+            List<EBond> compareList = new List<EBond>();
+            EBond bond = (EBond)dataGridForComparison.Items.GetItemAt(0);
+            compareList.Add(bond);
+            dataGridForComparison.ItemsSource = compareList;
         }
     }
 }

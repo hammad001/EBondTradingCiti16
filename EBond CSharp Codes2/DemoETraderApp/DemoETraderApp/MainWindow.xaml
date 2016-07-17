@@ -47,8 +47,6 @@
                     <TextBox x:Name="LPto" HorizontalAlignment="Left" Height="21" Margin="418,114,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="41"/>
                     <Button x:Name="SerachBtn" Content="Search" HorizontalAlignment="Left" Height="33" Margin="490,105,0,0" VerticalAlignment="Top" Width="67" Click="BondListSetup"/>
                     <TextBox x:Name="yeildTo" HorizontalAlignment="Left" Height="21" Margin="148,104,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="48"/>
-                    <DataGrid x:Name="dataGridfrbonds" HorizontalAlignment="Left" Height="64" Margin="110,164,0,0" VerticalAlignment="Top" Width="464" Opacity="0" >
-                    </DataGrid>
                     <Button x:Name="compareButton" Content="Compare" HorizontalAlignment="Left" Margin="110,311,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False" Click="compareButton_Click"/>
                     <DataGrid x:Name="dataGridForComparison" HorizontalAlignment="Left" Margin="110,164,0,0" VerticalAlignment="Top" Height="142" Width="464" Opacity="0" />
                     <Button x:Name="clearButton" Content="Clear" HorizontalAlignment="Left" Margin="200,311,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False" Click="clearButton_Click"/>
