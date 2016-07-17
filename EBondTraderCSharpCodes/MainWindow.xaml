@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DemoETraderApp"
         mc:Ignorable="d"
-        Title="E-Bond Trader" Height="768" Width="1366" >
+        Title="E-Bond Trader" Height="768" Width="1366" Left="0" Top="0" >
     <Grid x:Name="MyGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="84*"/>
@@ -39,14 +39,14 @@
                     <Label x:Name="label6" Content="ISIN" HorizontalAlignment="Left" Height="42" Margin="231,49,0,0" VerticalAlignment="Top" Width="122" FontSize="20" FontWeight="Bold"/>
                     <Label x:Name="label7" Content="Yield" HorizontalAlignment="Left" Height="41" Margin="231,143,0,0" VerticalAlignment="Top" Width="111" FontSize="20" FontWeight="Bold"/>
                     <TextBox x:Name="txtbxisin" HorizontalAlignment="Left" Height="39" Margin="231,95,0,0" TextWrapping="Wrap" Text="Enter Isin" VerticalAlignment="Top" FontSize="18" Width="122" GotFocus="ISIN"/>
-                    <TextBox x:Name="txtbxYieldfrm" HorizontalAlignment="Left" Height="37" Margin="182,184,0,0" TextWrapping="Wrap" Text="From" VerticalAlignment="Top" Width="101" FontSize="18" GotFocus="Yield"/>
+                    <TextBox x:Name="txtbxYieldfrm"  PreviewTextInput="numbersOnly" HorizontalAlignment="Left" Height="37" Margin="182,184,0,0" TextWrapping="Wrap" Text="From" VerticalAlignment="Top" Width="101" FontSize="18" GotFocus="Yield"/>
                     <Label x:Name="label8" Content="Last Price" HorizontalAlignment="Left" Height="49" Margin="741,148,0,0" VerticalAlignment="Top" Width="209" FontSize="20" FontWeight="Bold"/>
-                    <TextBox x:Name="CRfrom" HorizontalAlignment="Left" Height="39" Margin="450,95,0,0" TextWrapping="Wrap" Text="From" VerticalAlignment="Top" Width="93" FontSize="18" GotFocus="CR"/>
-                    <TextBox x:Name="CRto" HorizontalAlignment="Left" Height="39" Margin="554,95,0,0" TextWrapping="Wrap" Text="To" VerticalAlignment="Top" Width="89" FontSize="18" GotFocus="CRGS"/>
-                    <TextBox x:Name="LPfrom" HorizontalAlignment="Left" Height="37" Margin="720,201,0,0" TextWrapping="Wrap" Text="From" VerticalAlignment="Top" FontSize="18" Width="97" GotFocus="LP"/>
-                    <TextBox x:Name="LPto" HorizontalAlignment="Left" Height="37" Margin="826,201,0,0" TextWrapping="Wrap" Text="To" VerticalAlignment="Top" Width="81" FontSize="18" GotFocus="LPtoGs"/>
-                    <Button x:Name="SerachBtn" Content="Search" HorizontalAlignment="Left" Height="58" Margin="969,185,0,0" VerticalAlignment="Top" Width="132" Click="BondListSetup" FontSize="20" FontWeight="Bold"/>
-                    <TextBox x:Name="yeildTo" HorizontalAlignment="Left" Height="37" Margin="293,184,0,0" TextWrapping="Wrap" Text="To" VerticalAlignment="Top" Width="95" FontSize="18" GotFocus="Yieldto"/>
+                    <TextBox x:Name="CRfrom" PreviewTextInput="numbersOnly" HorizontalAlignment="Left" Height="39" Margin="450,95,0,0" TextWrapping="Wrap" Text="From" VerticalAlignment="Top" Width="93" FontSize="18" GotFocus="CR"/>
+                    <TextBox x:Name="CRto" PreviewTextInput="numbersOnly" HorizontalAlignment="Left" Height="39" Margin="554,95,0,0" TextWrapping="Wrap" Text="To" VerticalAlignment="Top" Width="89" FontSize="18" GotFocus="CRGS"/>
+                    <TextBox x:Name="LPfrom" PreviewTextInput="numbersOnly" HorizontalAlignment="Left" Height="37" Margin="720,201,0,0" TextWrapping="Wrap" Text="From" VerticalAlignment="Top" FontSize="18" Width="97" GotFocus="LP"/>
+                    <TextBox x:Name="LPto" PreviewTextInput="numbersOnly" HorizontalAlignment="Left" Height="37" Margin="826,201,0,0" TextWrapping="Wrap" Text="To" VerticalAlignment="Top" Width="81" FontSize="18" GotFocus="LPtoGs"/>
+                    <Button x:Name="SerachBtn" PreviewTextInput="numbersOnly" Content="Search" HorizontalAlignment="Left" Height="58" Margin="969,185,0,0" VerticalAlignment="Top" Width="132" Click="BondListSetup" FontSize="20" FontWeight="Bold"/>
+                    <TextBox x:Name="yeildTo" PreviewTextInput="numbersOnly" HorizontalAlignment="Left" Height="37" Margin="293,184,0,0" TextWrapping="Wrap" Text="To" VerticalAlignment="Top" Width="95" FontSize="18" GotFocus="Yieldto"/>
                     <DataGrid x:Name="dataGridfrbonds" HorizontalAlignment="Left" Height="259" Margin="217,289,0,0" VerticalAlignment="Top" Width="917">
 
                     </DataGrid>
@@ -78,21 +78,21 @@
                     <Label x:Name="label18" Content="Yield" HorizontalAlignment="Left" Height="61" Margin="67,311,0,0" VerticalAlignment="Top" Width="166" FontSize="20"  FontWeight="Bold"/>
                     <Label x:Name="label19" Content="Accrued Amount" HorizontalAlignment="Left" Height="56" Margin="67,491,0,0" VerticalAlignment="Top" Width="213" FontSize="20" FontWeight="Bold"/>
                     <TextBox x:Name="AAtxt" HorizontalAlignment="Left" Height="44" Margin="316,489,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="212" FontSize="18" IsReadOnly="True" Background="{DynamicResource {x:Static SystemColors.ScrollBarBrushKey}}"/>
-                    <TextBox x:Name="Yieldtxt" HorizontalAlignment="Left" Height="44" Margin="316,311,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="212" FontSize="18" KeyDown="setupAmounts"/>
-                    <TextBox x:Name="DPtxt" HorizontalAlignment="Left" Height="44" Margin="316,424,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="212" FontSize="18" Background="{DynamicResource {x:Static SystemColors.ScrollBarBrushKey}}" IsReadOnly="True"/>
-                    <TextBox x:Name="CPtxt" HorizontalAlignment="Left" Height="44" Margin="316,366,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" FontSize="18" GotFocus="showDefaultTxt" />
+                    <TextBox x:Name="Yieldtxt" PreviewTextInput="numbersOnly" HorizontalAlignment="Left" Height="44" Margin="316,311,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="212" FontSize="18" KeyDown="setupAmounts"/>
+                    <TextBox x:Name="DPtxt" PreviewTextInput="numbersOnly" HorizontalAlignment="Left" Height="44" Margin="316,424,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="212" FontSize="18" Background="{DynamicResource {x:Static SystemColors.ScrollBarBrushKey}}" IsReadOnly="True"/>
+                    <TextBox x:Name="CPtxt" PreviewTextInput="numbersOnly" HorizontalAlignment="Left" Height="44" Margin="316,366,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" FontSize="18" GotFocus="showDefaultTxt" />
                     <Label x:Name="label20" Content="Settlement Amount" HorizontalAlignment="Left" Height="49" Margin="67,547,0,0" VerticalAlignment="Top" Width="239" FontSize="20" FontWeight="Bold"/>
                     <TextBox x:Name="SAtxt" HorizontalAlignment="Left" Height="44" Margin="316,547,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="212" FontSize="18" Background="{DynamicResource {x:Static SystemColors.ScrollBarBrushKey}}" IsReadOnly="True"/>
                     <Button x:Name="Clearbtn" Content="CLEAR" HorizontalAlignment="Left" Height="56" Margin="901,292,0,0" VerticalAlignment="Top" Width="166" FontSize="20" FontWeight="Bold"/>
                     <Label x:Name="label18_Copy" Content="Quantity" HorizontalAlignment="Left" Height="46" Margin="67,252,0,0" VerticalAlignment="Top" Width="166" FontSize="20" FontWeight="Bold"/>
-                    <TextBox x:Name="Quantitybx" HorizontalAlignment="Left" Height="44" Margin="316,252,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="212" FontSize="18" KeyDown="setupAmounts"/>
+                    <TextBox x:Name="Quantitybx"  PreviewTextInput="numbersOnly" HorizontalAlignment="Left" Height="44" Margin="316,252,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="212" FontSize="18" KeyDown="setupAmounts"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="TBlWTab" Header="&#xD;&#xA;TradeBlotting&#xD;&#xA; Window" FontSize="20" Margin="0,95,0,-130" HorizontalAlignment="Left" Width="172" GotFocus="test" >
                 <Grid Background="#FFE5E5E5" Margin="0,0,0,-3">
                     <DataGrid x:Name="datagridblotter" HorizontalAlignment="Left" Margin="20,53,0,0" VerticalAlignment="Top" Height="480" Width="1134" FontSize="20" AutoGenerateColumns="False">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="OrderId" Width="80" Binding="{Binding OrderId}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="OrderId" Width="80"  Foreground="Red" Binding="{Binding OrderId}" IsReadOnly="True"/>
                             <DataGridTextColumn Header="ISIN" Width="80" Binding="{Binding ebond.isin}" IsReadOnly="True"/>
                             <DataGridTextColumn Header="Buy/Sell" Width="80" Binding="{Binding BuySell}" IsReadOnly="True"/>
                             <DataGridTextColumn Header="Purchase &#xA;Date" Width="100" Binding="{Binding PurchaseDate}" IsReadOnly="True"/>
@@ -107,9 +107,9 @@
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="Search_Blotter" Content="Search" HorizontalAlignment="Left" Margin="330,6,0,0" VerticalAlignment="Top" FontSize="20" Width="181" Height="39" Click="Search"/>
-                    <TextBox x:Name="textBox_blotter" Text="Enter ISIN" Foreground="Gray" HorizontalAlignment="Left" Height="39" Margin="20,6,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="276" GotFocus="textBox_blotter_GotFocus" KeyDown="ShowBookedBonds" />
+                    <TextBox x:Name="textBox_blotter" Text="Enter ISIN" Foreground="Red" HorizontalAlignment="Left" Height="39" Margin="20,6,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="276" GotFocus="textBox_blotter_GotFocus" KeyDown="ShowBookedBonds" />
 
-                    <TextBox x:Name="PagePrompt" FontSize="20" VerticalAlignment="Bottom" BorderThickness="0" Background="Transparent" Width="50" Height="44"  TextWrapping="Wrap" Text="Page" IsEnabled="False" Margin="461,0,655,8"/>
+                   <!-- <TextBox x:Name="PagePrompt" FontSize="20" VerticalAlignment="Bottom" BorderThickness="0" Background="Transparent" Width="50" Height="44"  TextWrapping="Wrap" Text="Page" IsEnabled="False" Margin="461,0,655,8"/>
                     <Button x:Name="previousPage" VerticalAlignment="Bottom" Content="Prev" Height="44" Click="previousPage_Click" Margin="100,0,988,48"/>
                     <Slider x:Name="pageSlider" Margin="235,0,399,48" VerticalAlignment="Bottom" Maximum="10" Cursor="Hand"
                 TickPlacement="TopLeft" TickFrequency="1" IsSnapToTickEnabled="True" ValueChanged="PageNumber_ValueChanged" Height="44" />
@@ -117,7 +117,7 @@
                     <Button x:Name="nextPage" VerticalAlignment="Bottom" Content="Next" Height="44" Click="nextPage_Click" Margin="803,0,300,48"/>
                     <TextBox x:Name="recFrom" VerticalAlignment="Bottom" Background="Beige" Height="44" TextWrapping="Wrap" Text="From 1" IsEnabled="False" Margin="915,0,143,48"/>
                     <TextBox x:Name="recTo"  VerticalAlignment="Bottom" Background="Beige" Height="44" TextWrapping="Wrap" Text="To 15" IsEnabled="False" Margin="1055,0,12,48"/>
-
+-->
 
                 </Grid>
 
