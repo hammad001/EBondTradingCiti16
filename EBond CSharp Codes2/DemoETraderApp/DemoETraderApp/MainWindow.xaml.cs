@@ -18,6 +18,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Web.Script.Serialization;
 
+
 namespace DemoETraderApp
 {
     /// <summary>
@@ -28,6 +29,8 @@ namespace DemoETraderApp
 
     public partial class MainWindow : Window
     {
+        bool clear = false;
+        List<EBond> compareList;
         public MainWindow()
         {
             InitializeComponent();
@@ -117,8 +120,41 @@ namespace DemoETraderApp
                 // help += ebond.ToString()+ "\n";
                
             }
-           // MessageBox.Show(help);
+            // MessageBox.Show(help);
 
+        }
+
+        public double func(double couponRate, double cleanPrice, double faceValue, double couponFrequency, int time)
+        {
+            double couponPayment = (faceValue * couponRate) / 100;
+            return faceValue - (cleanPrice * (Math.Pow(1 + (couponRate / couponFrequency), (couponFrequency * time))) + ((couponPayment * couponFrequency) / couponRate) * (Math.Pow(1 + (couponRate / couponFrequency), (couponFrequency * time)) - 1));
+        }
+
+        public double funcder(double couponRate, double cleanPrice, double faceValue, double couponFrequency, int time)
+        {
+            double couponPayment = (faceValue * couponRate) / 100;
+            return -(cleanPrice * time * Math.Pow(1 + (couponRate / couponFrequency), (couponFrequency * time) - 1)) - (couponPayment * couponRate * Math.Pow(1 + (couponRate / couponFrequency), (couponFrequency * time - 1))) / (Math.Pow(couponRate, 2)) + (couponPayment * couponRate) / (Math.Pow(couponRate, 2));
+
+        }
+
+        public double calculateYield(double couponRate, double cleanPrice, double faceValue,  double couponFrequency, int time)
+        {
+            double couponPayment = (faceValue * couponRate) / 100;
+
+
+            double temp, yield;
+            double limit = 0.0001;
+            double deltaY = 0.1;
+            while (deltaY > limit)
+            {
+                temp = couponRate - (func(couponRate, 91.89255, 100, 1, 13) / funcder(couponRate, 91.89255, 100, 1, 13));
+                deltaY = couponRate - temp;
+                couponRate = temp;
+                MessageBox.Show(deltaY.ToString() + "," + couponRate.ToString());
+            }
+            yield = couponRate * 100;
+
+            return yield;
         }
 
         private void Setup(object sender, RoutedEventArgs e)
@@ -188,12 +224,14 @@ namespace DemoETraderApp
             clearButton.IsEnabled = true;
             dataGridForComparison.Opacity = 100;
 
-            EBond bond1 =  (EBond)dataGridForComparison.Items.GetItemAt(0);
-            EBond bond2 = (EBond)Bondslstbx.SelectedItem;
-            List<EBond> compareList = new List<EBond>();
-            compareList.Add(bond1);
-            compareList.Add(bond2);
+            //       EBond bond1 =  (EBond)dataGridForComparison.Items.GetItemAt(0);
+            //      EBond bond2 = (EBond)Bondslstbx.SelectedItem;
+            compareList = new List<EBond>();
+            compareList.Add((EBond)dataGridForComparison.Items.GetItemAt(0));
+            compareList.Add((EBond)Bondslstbx.SelectedItem);
             dataGridForComparison.ItemsSource = compareList;
+            double yield = calculateYield(0.00827,91.89255, 100, 1, 13) ;
+            MessageBox.Show(yield.ToString());
         }
 
         private void SearchTermTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -204,7 +242,8 @@ namespace DemoETraderApp
 
         private void clearButton_Click(object sender, RoutedEventArgs e)
         {
-            List<EBond> compareList = new List<EBond>();
+            clear = true;
+            compareList = new List<EBond>();
             EBond bond = (EBond)dataGridForComparison.Items.GetItemAt(0);
             compareList.Add(bond);
             dataGridForComparison.ItemsSource = compareList;
