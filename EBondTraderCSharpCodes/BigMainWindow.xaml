@@ -17,7 +17,7 @@
             <RowDefinition Height="311*"/>
             <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
-        <Label x:Name="AppTitle" Content="E-Bond Trading" HorizontalAlignment="Left" VerticalAlignment="Top" Height="74" Width="1176" FontSize="30" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" Foreground="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" FontWeight="Bold" Grid.ColumnSpan="3" Margin="174,0,0,0"/>
+        <Label x:Name="AppTitle" Content="TradeBolt" HorizontalAlignment="Left" VerticalAlignment="Top" Height="74" Width="1176" FontSize="30" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" Foreground="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" FontWeight="Bold" Grid.ColumnSpan="3" Margin="174,0,0,0"/>
         <TabControl x:Name="tabControl" TabStripPlacement="Left" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="632" Grid.Row="1" VerticalAlignment="Top" Width="1350" Grid.RowSpan="2">
             <TabItem x:Name="BSMTab" Header="&#xD;&#xA;Bond Static &#xD;&#xA;Maintainence" FontSize="20" Margin="0,24,0,-55">
                 <Grid x:Name="GridfrBSM" Background="{DynamicResource {x:Static SystemColors.InactiveBorderBrushKey}}" Loaded="Setup">
@@ -92,18 +92,18 @@
                 <Grid Background="#FFE5E5E5" Margin="0,0,0,-3">
                     <DataGrid x:Name="datagridblotter" HorizontalAlignment="Left" Margin="20,53,0,0" VerticalAlignment="Top" Height="480" Width="1134" FontSize="20" AutoGenerateColumns="False">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="OrderId" Binding="{Binding OrderId}" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="ISIN" Binding="{Binding ebond.isin}" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="Buy/Sell" Binding="{Binding BuySell}" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="Purchase Date" Binding="{Binding PurchaseDate}" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="Face Value" Binding="{Binding ebond.faceValue}" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="Currency" Binding="{Binding ebond.currency}" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="Coupon Rate" Binding="{Binding ebond.couponRate}" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="Coupon Frequency" Binding="{Binding ebond.couponFrequency}" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="Maturity Date" Binding="{Binding ebond.maturityDate}" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="Purchase Price" Binding="{Binding ebond.lastPrice}" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="Yield" Binding="{Binding ebond.yeild}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="OrderId" Width="80" Binding="{Binding OrderId}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="ISIN" Width="80" Binding="{Binding ebond.isin}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Buy/Sell" Width="80" Binding="{Binding BuySell}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Purchase &#xA;Date" Width="100" Binding="{Binding PurchaseDate}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Face &#xA;Value" Width="100" Binding="{Binding ebond.faceValue}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Quantity" Width="90" Binding="{Binding Quantity}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Currency" Width="90" Binding="{Binding ebond.currency}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Coupon &#xA;Rate" Width="80" Binding="{Binding ebond.couponRate}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Coupon &#xA;Freq" Width="80" Binding="{Binding ebond.couponFrequency}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Maturity &#xA;Date" Width="90" Binding="{Binding ebond.maturityDate}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Purchase &#xA;Price" Width="100" Binding="{Binding ebond.lastPrice}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Yield" Width="80" Binding="{Binding ebond.yeild}" IsReadOnly="True"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="Search_Blotter" Content="Search" HorizontalAlignment="Left" Margin="330,6,0,0" VerticalAlignment="Top" FontSize="20" Width="181" Height="39" Click="Search"/>
