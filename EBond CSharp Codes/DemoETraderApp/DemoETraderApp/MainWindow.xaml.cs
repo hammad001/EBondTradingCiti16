@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
+using System.Web.Script.Serialization;
 
 namespace DemoETraderApp
 {
@@ -63,14 +64,42 @@ namespace DemoETraderApp
             }
             
         }
-
+        public int GetIndex()
+        {
+            //int selectedBondIndex = Bondslstbx.SelectedIndex;
+            string searchItem = Bondslstbx.SelectedItem.ToString();
+            int index = 0;
+            foreach(var item in ISINcbx.Items)
+            {
+                if (item.ToString() == searchItem) return index;
+                index++;
+            }
+            return -1;
+        }
         private void OpenTBWTab(object sender, RoutedEventArgs e)
         {
-           
-            tabControl.SelectedItem = TBWTab;
-            // Load events...(later..)
-           
             
+            EBond bookingbond = (EBond)Bondslstbx.SelectedItem;
+            tabControl.SelectedItem = TBWTab;
+            ISINcbx.SelectedItem = bookingbond;
+            
+            ISINcbx.SelectedIndex = GetIndex() ;            
+            FVtxt.Text = bookingbond.faceValue.ToString();
+            CRtxt.Text = bookingbond.couponRate.ToString();
+            CFtxt.Text = bookingbond.couponFrequency.ToString();
+            CrRtxt.Text = bookingbond.creditRating.ToString();
+            LPtxt.Text = bookingbond.lastPrice.ToString();
+            MDtxt.Text = bookingbond.maturityDate.ToString();
+            SDtxt.Text = SettlementDate(bookingbond.settlementDays);
+            
+            
+                                    
+        }
+        public string SettlementDate (int days)
+        {
+            DateTime Settlementdate = new DateTime();
+            Settlementdate = DateTime.Today.AddDays(days);
+            return Settlementdate.ToShortDateString();
         }
 
         private void BondListSetup(object sender, RoutedEventArgs e)
@@ -82,8 +111,8 @@ namespace DemoETraderApp
             string mdto = MDto.SelectedDate.Value.ToShortDateString();
             string searchstring = "{\"isin\":\"" + txtbxisin.Text + "\",\"couponRateFrom\":\"" + CRfrom.Text +
                 "\",\"couponRateTo\":\"" + CRto.Text + "\",\"frequency\":\"" + comboBoxFrequency.SelectedItem.ToString() +
-                "\",\"currency\":\"" + comboBox1.SelectedItem.ToString() + "\",\"creditRating\":\"" + CreditRatingBx.SelectedItem.ToString() +
-                "\",\"yeildFrom\":\"" + txtbxYield.Text+ "\",\"yeildTo\":\"" + yeildTo.Text + "\",\"lastPriceFrom\":\"" +
+                "\",\"currency\":\"" + Currencybx.SelectedItem.ToString() + "\",\"creditRating\":\"" + CreditRatingBx.SelectedItem.ToString() +
+                "\",\"yeildFrom\":\"" + txtbxYieldfrm.Text+ "\",\"yeildTo\":\"" + yeildTo.Text + "\",\"lastPriceFrom\":\"" +
                 LPfrom.Text+ "\",\"lastPriceTo\":\"" + LPto.Text + "\",\"maturityDateFrom\":\"" +MDfrom.SelectedDate.Value.ToShortDateString()
                 + "\",\"maturityDateTo\":\"" + mdto + "\"}";
             // MessageBox.Show(searchstring);
@@ -127,11 +156,11 @@ namespace DemoETraderApp
             comboBoxFrequency.Items.Add("A");
             comboBoxFrequency.Items.Add("S");
             comboBoxFrequency.Items.Add("Q");
-            comboBox1.Items.Add("");
-            comboBox1.Items.Add("USD");
-            comboBox1.Items.Add("INR");
-            comboBox1.Items.Add("GBP");
-            comboBox1.Items.Add("EUR");
+            Currencybx.Items.Add("");
+            Currencybx.Items.Add("USD");
+            Currencybx.Items.Add("INR");
+            Currencybx.Items.Add("GBP");
+            Currencybx.Items.Add("EUR");
 
         }
         public Stream StringToStream(string s)
@@ -145,6 +174,224 @@ namespace DemoETraderApp
 
         }
 
+        private void LoadISIN(object sender, RoutedEventArgs e)
+        {
+            var client = new WebClient();
+            string isinString = client.DownloadString("http://192.168.137.37:8080/EBondTraderWeb/rest/bond/tbs");
+
+
+            /*Stream isinstrm = StringToStream(isinString);
+            StreamReader reader = new StreamReader(isinstrm);
+            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(EBond[]));
+            EBond[] EBondslst = (EBond[])serializer.ReadObject(reader.BaseStream); */
+            //string help3 = "";
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            List<EBond> EBondslst = (List<EBond>)js.Deserialize(isinString, typeof(List<EBond>));
+
+            foreach (EBond ebond in EBondslst)
+            {
+                ISINcbx.Items.Add(ebond.isin);
+
+            }
+           
+        }
+
+        private void selectEBond(object sender, MouseButtonEventArgs e)
+        {
+            EBond sentebond = (EBond)Bondslstbx.SelectedItem;
+            dataGridfrbonds.ItemsSource = bondsetup(sentebond);
+            //dataGridfrbonds.Items.Add(sentebond);
+            buttonfrBT.IsEnabled = true;
+        }
+
+        private void ClearSearch(object sender, RoutedEventArgs e)
+        {
+            CreditRatingBx.SelectedIndex = 0;
+            Currencybx.SelectedIndex = 0;
+            comboBoxFrequency.SelectedIndex = 0;
+            txtbxisin.Text = "";
+            CRfrom.Text = "";
+            CRto.Text = "";
+            txtbxYieldfrm.Text = "";
+            yeildTo.Text = "";
+            LPfrom.Text = "";
+            LPto.Text = "";
+            MDfrom.SelectedDate = new DateTime(2000,07,16);
+            MDto.SelectedDate = new DateTime(2051, 07, 16);
+            Bondslstbx.Items.Clear();
+        }
+
+        private void ReselectBond(object sender, MouseButtonEventArgs e)
+        {
+            string nwisin = ISINcbx.SelectedItem.ToString();
+            
+            var user = new WebClient();
+           
+            string address = "http://192.168.137.37:8080/EBondTraderWeb/rest/bond/tbs?isin=" + nwisin;
+            string searchedbond = user.DownloadString(address);
+            Stream bondstream = StringToStream(searchedbond);
+            StreamReader reader = new StreamReader(bondstream);
+            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(EBond[]));
+            EBond[] EbondwithNwIsin = (EBond[])serializer.ReadObject(bondstream);
+            EBond NwIsin = EbondwithNwIsin[0];
+
+            FVtxt.Text = NwIsin.faceValue.ToString();
+            CRtxt.Text = NwIsin.couponRate.ToString();
+            CFtxt.Text = NwIsin.couponFrequency.ToString();
+            CrRtxt.Text = NwIsin.creditRating.ToString();
+            LPtxt.Text = NwIsin.lastPrice.ToString();
+            MDtxt.Text = NwIsin.maturityDate.ToString();
+            SDtxt.Text = SettlementDate(NwIsin.settlementDays);
+
+        }
+
        
+
+        public double CalculateSetlmntAmnt(double lastPice,int quantity)
+        {
+            return lastPice * quantity;
+        }
+        public int GetFreq()
+        {
+            int r = 1;
+            if (CFtxt.Text == "S") r = 2;
+            else if (CFtxt.Text == "Q") r = 4;
+
+            return r;
+        }
+        public int Getyrs(string date)
+        {
+            DateTime md = DateTime.Parse(date);
+            int yr=(md-DateTime.Today).Days/365;
+            return yr;
+        }
+        public double CalculateCleanPrice()
+        {
+            double couponrate = double.Parse(CRtxt.Text);
+            double FaceVal = double.Parse(FVtxt.Text);
+            double C = couponrate * FaceVal;
+            int k = GetFreq();
+            int RbyK = int.Parse(Yieldtxt.Text) /k;
+            int n = Getyrs(MDtxt.Text);
+            double exp = (1 - ((1) /( (1 + RbyK) ^ (k * n)))) * (C / RbyK);
+            double exp2 = (FaceVal) * ((1) /( (1 + RbyK) ^ (k * n)));
+            double CP = exp + exp2;
+            return CP;
+
+        }
+        public int calcdatediff(DateTime issdDate)
+        {
+            int diff = (DateTime.Today.Date - issdDate).Days;
+            
+            return (diff%365);
+            
+        }
+        // DateTime x = new DateTime();
+        double lastPice;
+        int quantity;
+        string bondid;
+        public double CalculateAcrdAmnt()
+        {
+            double couponrate = double.Parse(CRtxt.Text);
+            double FaceVal = double.Parse(FVtxt.Text);
+            double C = couponrate * FaceVal;
+            EBond it=(EBond)Bondslstbx.SelectedItem;
+            lastPice = it.lastPrice;
+            quantity = int.Parse(Quantitybx.Text);
+            bondid = it.bondId.ToString();
+            DateTime isd = DateTime.Parse(it.issueDate);
+            int issuedays = calcdatediff(isd);
+            double res1 = (issuedays) % (365 / GetFreq());
+            double res = (res1 / ((double)365 / GetFreq()))*C;
+            return res;
+        }
+        public double CalDirtyPrice()
+        {
+            double ret;
+            ret = CalculateCleanPrice() + CalculateAcrdAmnt();
+            return ret;
+        }
+
+        private void showDefaultTxt(object sender, RoutedEventArgs e)
+        {
+
+            CPtxt.Text = "";
+        }
+
+        private void setupAmounts(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+            {
+                string Cp = CalculateCleanPrice().ToString();
+                CPtxt.Text = Cp;
+                string Dp = CalDirtyPrice().ToString();
+                DPtxt.Text = Dp;
+                string AA = CalculateAcrdAmnt().ToString();
+                AAtxt.Text = AA;
+                string Sa = CalculateSetlmntAmnt(lastPice, quantity).ToString();
+                SAtxt.Text = Sa;
+            }
+        }
+
+        private void BuyTrade(object sender, RoutedEventArgs e)
+        {
+            var client = new WebClient();
+            client.Headers[HttpRequestHeader.ContentType] = "text/plain";
+            string post = "{" + "\"quantity\":\"" + Quantitybx.Text + "\",\"bondId\":\"" + bondid +
+                "\",\"buySell\":\"B\"}";
+           // MessageBox.Show(post);
+
+            string rec = client.UploadString("http://192.168.137.37:8080/EBondTraderWeb/rest/bond/tbs", post);
+            MessageBox.Show(rec);
+            if (rec == "{\"status\":\"Success\"}") MessageBox.Show("$$Your E-Bond has been successfully booked!$$");
+            else MessageBox.Show("**Sorry, Your Bond has not been booked**");
+        }
+
+        private void SellTrade(object sender, RoutedEventArgs e)
+        {
+            var client = new WebClient();
+            client.Headers[HttpRequestHeader.ContentType] = "text/plain";
+            string post = "{" + "\"quantity\":\"" + Quantitybx.Text + "\",\"bondId\":\"" + bondid +
+                "\",\"buySell\":\"S\"}";
+            string rec = client.UploadString("http://192.168.137.37:8080/EBondTraderWeb/rest/bond/tbs", post);
+            MessageBox.Show(rec);
+            if (rec == "{\"status\":\"Success\"}") MessageBox.Show("$$Your E-Bond has been successfully booked!$$");
+            else MessageBox.Show("**Sorry, Your Bond has not been booked**");
+        }
+
+        private void ISIN(object sender, RoutedEventArgs e)
+        {
+            txtbxisin.Text = "";
+        }
+
+        private void CR(object sender, RoutedEventArgs e)
+        {
+            CRfrom.Text = "";
+        }
+
+        private void CRGS(object sender, RoutedEventArgs e)
+        {
+            CRto.Text = "";
+        }
+
+        private void Yield(object sender, RoutedEventArgs e)
+        {
+            txtbxYieldfrm.Text = "";
+        }
+
+        private void Yieldto(object sender, RoutedEventArgs e)
+        {
+            yeildTo.Text = "";
+        }
+
+        private void LP(object sender, RoutedEventArgs e)
+        {
+            LPfrom.Text = "";
+        }
+
+        private void LPtoGs(object sender, RoutedEventArgs e)
+        {
+            LPto.Text = "";
+        }
     }
 }

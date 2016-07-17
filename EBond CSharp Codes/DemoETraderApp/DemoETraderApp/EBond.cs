@@ -20,7 +20,7 @@ namespace DemoETraderApp
         [DataMember]
         public string issueDate { get; set; }
         [DataMember]
-        public string settlementDays { get; set; }
+        public int settlementDays { get; set; }
         [DataMember]
         public int faceValue { get; set; }
         [DataMember]
@@ -44,7 +44,7 @@ namespace DemoETraderApp
         [DataMember]
         public string currency { get; set; }
 
-        public EBond(string isin, string issueDate, string settlementDays, int faceValue, double couponRate,
+        public EBond(string isin, string issueDate, int settlementDays, int faceValue, double couponRate,
             char couponFrequency, string maturityDate, double lastPrice, double high, double low, double changeInPrice,
             double yeild, string creditRating, string currency)
         {
@@ -68,6 +68,11 @@ namespace DemoETraderApp
         public override string ToString()
         {
             return string.Format(isin);
+        }
+
+        public EBond()
+        {
+
         }
     }
 }

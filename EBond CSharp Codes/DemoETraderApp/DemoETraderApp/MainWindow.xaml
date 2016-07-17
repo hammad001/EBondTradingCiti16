@@ -20,53 +20,72 @@
         <Label x:Name="AppTitle" Content="E-Bond Trading" HorizontalAlignment="Left" VerticalAlignment="Top" Height="42" Width="595" FontSize="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" Foreground="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" FontWeight="Bold" Grid.ColumnSpan="3" Margin="88,0,0,0"/>
         <TabControl x:Name="tabControl" TabStripPlacement="Left" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="358" Grid.Row="1" VerticalAlignment="Top" Width="683" Grid.RowSpan="2">
             <TabItem x:Name="BSMTab" Header="&#xD;&#xA;Bond Static &#xD;&#xA;Maintainence" Margin="0,24,0,-55">
-                <Grid Background="{DynamicResource {x:Static SystemColors.InactiveBorderBrushKey}}" Loaded="Setup">
+                <Grid x:Name="GridfrBSM" Background="{DynamicResource {x:Static SystemColors.InactiveBorderBrushKey}}" Loaded="Setup">
                     <Button x:Name="selectbtn" Content="select" HorizontalAlignment="Left" Margin="10,311,0,0" VerticalAlignment="Top" Width="69" Click="selectbond" RenderTransformOrigin="0.333,-0.682"/>
                     <Label x:Name="labelfrbondlist" Content="Bond List" HorizontalAlignment="Left" Margin="0,138,0,0" VerticalAlignment="Top" Width="103" Height="26" FontSize="13.333" BorderBrush="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" OpacityMask="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-                    <ListBox x:Name="Bondslstbx" HorizontalAlignment="Left" Height="147" Margin="0,164,0,0" VerticalAlignment="Top" Width="103"/>
+                    <ListBox x:Name="Bondslstbx" HorizontalAlignment="Left" Height="147" Margin="0,164,0,0" VerticalAlignment="Top" Width="103" MouseDoubleClick="selectEBond"/>
                     <ComboBox x:Name="CreditRatingBx" Text="Select" HorizontalAlignment="Left" Height="20" Margin="10,53,0,0" VerticalAlignment="Top" Width="79" SelectedIndex="0" />
                     <Label x:Name="label1" Content="Coupon rate&#xA;" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" Margin="228,29,259,0" VerticalAlignment="Top" Height="24" Width="97" FontSize="10.667" FontWeight="Bold"/>
                     <ComboBox x:Name="comboBoxFrequency" HorizontalAlignment="Left" Height="20" Margin="369,57,0,0" VerticalAlignment="Top" Width="79" SelectedIndex="0"/>
                     <Label x:Name="label2" Content="Credit Rating" HorizontalAlignment="Left" Height="26" Margin="10,27,0,0" VerticalAlignment="Top" Width="103" FontSize="10.667" FontWeight="Bold"/>
                     <Label x:Name="label3" Content="Frequency" HorizontalAlignment="Left" Height="26" Margin="374,31,0,0" VerticalAlignment="Top" Width="85" RenderTransformOrigin="0.294,0.538" FontWeight="Bold"/>
                     <Label x:Name="label4" Content="Currency" HorizontalAlignment="Left" Height="26" Margin="10,78,0,0" VerticalAlignment="Top" Width="77" FontWeight="Bold"/>
-                    <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Height="20" Margin="10,104,0,0" VerticalAlignment="Top" Width="66" SelectedIndex="0"/>
+                    <ComboBox x:Name="Currencybx" HorizontalAlignment="Left" Height="20" Margin="10,104,0,0" VerticalAlignment="Top" Width="66" SelectedIndex="0"/>
                     <Label x:Name="label5" Content="Maturity Date" HorizontalAlignment="Left" Height="29" Margin="237,84,0,0" VerticalAlignment="Top" Width="88" FontWeight="Bold"/>
                     <DatePicker x:Name="MDfrom" HorizontalAlignment="Left" Height="25" Margin="228,113,0,0" VerticalAlignment="Top" Width="56" SelectedDate="2000-07-16"/>
                     <DatePicker x:Name="MDto" HorizontalAlignment="Left" Height="25" Margin="289,113,0,0" VerticalAlignment="Top" Width="55" SelectedDate="2051-07-16"/>
-                    <Button x:Name="ClrBtn" Content="Clear" HorizontalAlignment="Left" Height="33" Margin="490,57,0,0" VerticalAlignment="Top" Width="67" RenderTransformOrigin="0.74,3.273"/>
+                    <Button x:Name="ClrBtn" Content="Clear" HorizontalAlignment="Left" Height="33" Margin="490,57,0,0" VerticalAlignment="Top" Width="67" RenderTransformOrigin="0.74,3.273" FontWeight="Bold" Click="ClearSearch"/>
                     <Button x:Name="buttonfrBT" Content="Book Trade" HorizontalAlignment="Left" Height="22" VerticalAlignment="Top" Width="88" Click="OpenTBWTab" IsEnabled="False" Margin="398,311,0,0"/>
                     <Label x:Name="label6" Content="ISIN" HorizontalAlignment="Left" Height="24" Margin="117,28,0,0" VerticalAlignment="Top" Width="62" FontWeight="Bold"/>
                     <Label x:Name="label7" Content="Yield" HorizontalAlignment="Left" Height="23" Margin="117,81,0,0" VerticalAlignment="Top" Width="56" FontWeight="Bold"/>
-                    <TextBox x:Name="txtbxisin" HorizontalAlignment="Left" Height="22" Margin="117,54,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="62"/>
-                    <TextBox x:Name="txtbxYield" HorizontalAlignment="Left" Height="21" Margin="92,104,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="51"/>
+                    <TextBox x:Name="txtbxisin" HorizontalAlignment="Left" Height="22" Margin="117,54,0,0" TextWrapping="Wrap" Text="Enter Isin" VerticalAlignment="Top" Width="62" GotFocus="ISIN"/>
+                    <TextBox x:Name="txtbxYieldfrm" HorizontalAlignment="Left" Height="21" Margin="92,104,0,0" TextWrapping="Wrap" Text="From" VerticalAlignment="Top" Width="51" GotFocus="Yield"/>
                     <Label x:Name="label8" Content="Last Price" HorizontalAlignment="Left" Height="28" Margin="375,84,0,0" VerticalAlignment="Top" Width="106" FontWeight="Bold"/>
-                    <TextBox x:Name="CRfrom" HorizontalAlignment="Left" Height="22" Margin="228,54,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="47"/>
-                    <TextBox x:Name="CRto" HorizontalAlignment="Left" Height="22" Margin="280,54,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="45"/>
-                    <TextBox x:Name="LPfrom" HorizontalAlignment="Left" Height="21" Margin="364,114,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="49"/>
-                    <TextBox x:Name="LPto" HorizontalAlignment="Left" Height="21" Margin="418,114,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="41"/>
-                    <Button x:Name="SerachBtn" Content="Search" HorizontalAlignment="Left" Height="33" Margin="490,105,0,0" VerticalAlignment="Top" Width="67" Click="BondListSetup"/>
-                    <TextBox x:Name="yeildTo" HorizontalAlignment="Left" Height="21" Margin="148,104,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="48"/>
+                    <TextBox x:Name="CRfrom" HorizontalAlignment="Left" Height="22" Margin="228,54,0,0" TextWrapping="Wrap" Text="From" VerticalAlignment="Top" Width="47" GotFocus="CR"/>
+                    <TextBox x:Name="CRto" HorizontalAlignment="Left" Height="22" Margin="280,54,0,0" TextWrapping="Wrap" Text="To" VerticalAlignment="Top" Width="45" GotFocus="CRGS"/>
+                    <TextBox x:Name="LPfrom" HorizontalAlignment="Left" Height="21" Margin="364,114,0,0" TextWrapping="Wrap" Text="From" VerticalAlignment="Top" Width="49" GotFocus="LP"/>
+                    <TextBox x:Name="LPto" HorizontalAlignment="Left" Height="21" Margin="418,114,0,0" TextWrapping="Wrap" Text="To" VerticalAlignment="Top" Width="41" GotFocus="LPtoGs"/>
+                    <Button x:Name="SerachBtn" Content="Search" HorizontalAlignment="Left" Height="33" Margin="490,105,0,0" VerticalAlignment="Top" Width="67" Click="BondListSetup" FontWeight="Bold"/>
+                    <TextBox x:Name="yeildTo" HorizontalAlignment="Left" Height="21" Margin="148,104,0,0" TextWrapping="Wrap" Text="To" VerticalAlignment="Top" Width="48" GotFocus="Yieldto"/>
                     <DataGrid x:Name="dataGridfrbonds" HorizontalAlignment="Left" Height="147" Margin="110,164,0,0" VerticalAlignment="Top" Width="464">
 
                     </DataGrid>
 
                 </Grid>
             </TabItem>
-            <TabItem x:Name="TBWTab" Header="&#xD;&#xA;TradeBooking&#xD;&#xA;Window" Margin="0,57,1,-92">
-                <Grid Background="#FFE5E5E5">
-                    <Button x:Name="bookingbtn" Content="BUY" HorizontalAlignment="Left" Height="32" Margin="258,261,0,0" VerticalAlignment="Top" Width="84" FontWeight="Bold" FontSize="13.333" Background="{DynamicResource {x:Static SystemColors.InactiveBorderBrushKey}}" />
-                    <TextBox x:Name="CRtxt" HorizontalAlignment="Left" Height="25" Margin="253,35,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="89" Background="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}"/>
-                    <TextBox x:Name="FVtxt" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="86" Background="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}" Margin="122,35,0,0"/>
-                    <ComboBox x:Name="ISINcbx" HorizontalAlignment="Left" Height="25" Margin="0,35,0,0" VerticalAlignment="Top" Width="107"/>
-                    <Label x:Name="label" Content="Face Value" HorizontalAlignment="Left" Height="28" Margin="122,2,0,0" VerticalAlignment="Top" Width="86" FontWeight="Bold"/>
-                    <Label x:Name="label9" Content="Coupon Rate" HorizontalAlignment="Left" Height="31" Margin="253,2,0,0" VerticalAlignment="Top" Width="89" FontWeight="Bold"/>
-                    <Label x:Name="label10" Content="Coupon Frequency" HorizontalAlignment="Left" Height="31" Margin="369,2,0,0" VerticalAlignment="Top" Width="120" FontWeight="Bold"/>
-                    <TextBox x:Name="CFtxt" HorizontalAlignment="Left" Height="25" Margin="380,35,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="109"/>
+            <TabItem x:Name="TBWTab" Header="&#xD;&#xA;TradeBooking&#xD;&#xA;Window" Margin="0,57,1,-92" Loaded="LoadISIN">
+                <Grid x:Name="GridfrTBS" Background="#FFE5E5E5">
+                    <Button x:Name="bookingbtn" Content="BUY" HorizontalAlignment="Left" Height="32" Margin="356,269,0,0" VerticalAlignment="Top" Width="84" FontWeight="Bold" FontSize="13.333" Click="BuyTrade" />
+                    <TextBox x:Name="CRtxt" HorizontalAlignment="Left" Height="25" Margin="278,35,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="89" Background="{DynamicResource {x:Static SystemColors.ScrollBarBrushKey}}" IsReadOnly="True"/>
+                    <TextBox x:Name="FVtxt" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="86" Background="{DynamicResource {x:Static SystemColors.ScrollBarBrushKey}}" Margin="137,37,0,0" IsReadOnly="True"/>
+                    <ComboBox x:Name="ISINcbx" HorizontalAlignment="Left" Height="25" Margin="0,35,0,0" VerticalAlignment="Top" Width="107" MouseDoubleClick="ReselectBond"/>
+                    <Label x:Name="label" Content="Face Value" HorizontalAlignment="Left" Height="28" Margin="137,4,0,0" VerticalAlignment="Top" Width="86" FontWeight="Bold"/>
+                    <Label x:Name="label9" Content="Coupon Rate" HorizontalAlignment="Left" Height="31" Margin="278,2,0,0" VerticalAlignment="Top" Width="89" FontWeight="Bold"/>
+                    <Label x:Name="label10" Content="Coupon Frequency" HorizontalAlignment="Left" Height="31" Margin="420,2,0,0" VerticalAlignment="Top" Width="120" FontWeight="Bold"/>
+                    <TextBox x:Name="CFtxt" HorizontalAlignment="Left" Height="25" Margin="431,35,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="109" Background="{DynamicResource {x:Static SystemColors.ScrollBarBrushKey}}" IsReadOnly="True"/>
                     <Label x:Name="label11" Content="ISIN" HorizontalAlignment="Left" Height="30" Margin="3,2,0,0" VerticalAlignment="Top" Width="104" FontWeight="Bold"/>
                     <Label x:Name="label12" Content="Credit Rating" HorizontalAlignment="Left" Height="30" Margin="3,65,0,0" VerticalAlignment="Top" Width="104" FontWeight="Bold"/>
-                    <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="25" Margin="3,95,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="104"/>
-                    <Label x:Name="label13" Content="Last Price" HorizontalAlignment="Left" Height="30" Margin="122,65,0,0" VerticalAlignment="Top" Width="103" FontWeight="Bold"/>
+                    <TextBox x:Name="CrRtxt" HorizontalAlignment="Left" Height="25" Margin="3,95,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="104" Background="{DynamicResource {x:Static SystemColors.ScrollBarBrushKey}}" IsReadOnly="True"/>
+                    <Label x:Name="label13" Content="Last Price" HorizontalAlignment="Left" Height="30" Margin="137,67,0,0" VerticalAlignment="Top" Width="103" FontWeight="Bold"/>
+                    <TextBox x:Name="LPtxt" HorizontalAlignment="Left" Height="25" Margin="137,97,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="86" Background="{DynamicResource {x:Static SystemColors.ScrollBarBrushKey}}" IsReadOnly="True"/>
+                    <Label x:Name="label14" Content="Maturity Date" HorizontalAlignment="Left" Height="30" Margin="269,65,0,0" VerticalAlignment="Top" Width="107" FontWeight="Bold"/>
+                    <Label x:Name="label15" Content="Settlement Date" HorizontalAlignment="Left" Height="30" Margin="431,65,0,0" VerticalAlignment="Top" Width="109" FontWeight="Bold"/>
+                    <TextBox x:Name="MDtxt" HorizontalAlignment="Left" Height="25" Margin="269,95,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="98" Background="{DynamicResource {x:Static SystemColors.ScrollBarBrushKey}}" IsReadOnly="True"/>
+                    <TextBox x:Name="SDtxt" HorizontalAlignment="Left" Height="25" Margin="426,95,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="114" Background="{DynamicResource {x:Static SystemColors.ScrollBarBrushKey}}" IsReadOnly="True"/>
+                    <Button x:Name="Sellbtn" Content="SELL" HorizontalAlignment="Left" Height="32" Margin="456,269,0,0" VerticalAlignment="Top" Width="84" FontWeight="Bold" FontSize="13.333" Click="SellTrade"/>
+                    <Label x:Name="label16" Content="Clean Price" HorizontalAlignment="Left" Height="32" Margin="34,208,0,0" VerticalAlignment="Top" Width="108" FontWeight="Bold"/>
+                    <Label x:Name="label17" Content="Dirty Price" HorizontalAlignment="Left" Height="32" Margin="34,241,0,0" VerticalAlignment="Top" Width="95" FontWeight="Bold"/>
+                    <Label x:Name="label18" Content="Yield" HorizontalAlignment="Left" Height="31" Margin="34,177,0,0" VerticalAlignment="Top" Width="84" FontWeight="Bold"/>
+                    <Label x:Name="label19" Content="Accrued Amount" HorizontalAlignment="Left" Height="32" Margin="34,278,0,0" VerticalAlignment="Top" Width="108" FontWeight="Bold"/>
+                    <TextBox x:Name="AAtxt" HorizontalAlignment="Left" Height="25" Margin="160,278,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="107" IsReadOnly="True" Background="{DynamicResource {x:Static SystemColors.ScrollBarBrushKey}}"/>
+                    <TextBox x:Name="Yieldtxt" HorizontalAlignment="Left" Height="25" Margin="160,177,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="107" KeyDown="setupAmounts"/>
+                    <TextBox x:Name="DPtxt" HorizontalAlignment="Left" Height="25" Margin="160,241,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="107" Background="{DynamicResource {x:Static SystemColors.ScrollBarBrushKey}}" IsReadOnly="True"/>
+                    <TextBox x:Name="CPtxt" HorizontalAlignment="Left" Height="25" Margin="160,208,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="107" GotFocus="showDefaultTxt" />
+                    <Label x:Name="label20" Content="Settlement Amount" HorizontalAlignment="Left" Height="28" Margin="34,310,0,0" VerticalAlignment="Top" Width="121" FontWeight="Bold"/>
+                    <TextBox x:Name="SAtxt" HorizontalAlignment="Left" Height="25" Margin="160,310,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="107" Background="{DynamicResource {x:Static SystemColors.ScrollBarBrushKey}}" IsReadOnly="True"/>
+                    <Button x:Name="Clearbtn" Content="CLEAR" HorizontalAlignment="Left" Height="32" Margin="456,166,0,0" VerticalAlignment="Top" Width="84" FontWeight="Bold"/>
+                    <Label x:Name="label18_Copy" Content="Quantity" HorizontalAlignment="Left" Height="31" Margin="34,143,0,0" VerticalAlignment="Top" Width="84" FontWeight="Bold"/>
+                    <TextBox x:Name="Quantitybx" HorizontalAlignment="Left" Height="25" Margin="160,143,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="107" KeyDown="setupAmounts"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="TBlWTab" Header="&#xD;&#xA;TradeBlotting&#xD;&#xA; Window" Margin="0,95,0,-130" HorizontalAlignment="Left" Width="87" Height="87" VerticalAlignment="Top">
