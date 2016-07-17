@@ -24,8 +24,7 @@ namespace DemoETraderApp
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     /// 
-
-
+       
 
     public partial class MainWindow : Window
     {
@@ -53,7 +52,7 @@ namespace DemoETraderApp
         {
             //int index = Bondslstbx.SelectedIndex;
 
-            dataGridfrbonds.Opacity = 100;
+            
 
             if (Bondslstbx.SelectedIndex == -1)
             {
@@ -61,6 +60,7 @@ namespace DemoETraderApp
             }
             else
             {
+                dataGridfrbonds.Opacity = 100;
                 EBond sentebond = (EBond)Bondslstbx.SelectedItem;
                dataGridfrbonds.ItemsSource= bondsetup(sentebond);
                //dataGridfrbonds.Items.Add(sentebond);
@@ -190,8 +190,14 @@ namespace DemoETraderApp
         {
             clearButton.IsEnabled = true;
             dataGridForComparison.Opacity = 100;
+            dataGridfrbonds.Opacity = 0;
+
+            EBond bond1 =  (EBond) dataGridfrbonds.Items.GetItemAt(0);
             EBond bond2 = (EBond)Bondslstbx.SelectedItem;
-            dataGridForComparison.ItemsSource = bondsetup(bond2);
+            List<EBond> compareList = new List<EBond>();
+            compareList.Add(bond1);
+            compareList.Add(bond2);
+            dataGridForComparison.ItemsSource = compareList;
         }
 
         private void SearchTermTextBox_TextChanged(object sender, TextChangedEventArgs e)
