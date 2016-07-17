@@ -13,7 +13,7 @@
         </DataGrid>
         <TextBox x:Name="PagePrompt" VerticalAlignment="Bottom" BorderThickness="0" Background="Transparent" Height="23" TextWrapping="Wrap" Text="Page" IsEnabled="False" Margin="216,0,529,40"/>
         <Button x:Name="previousPage" VerticalAlignment="Bottom" Content="Prev" Height="32" Click="previousPage_Click" Margin="73,0,669,69"/>
-        <Slider x:Name="PageNumber" Margin="128,0,364,68" VerticalAlignment="Bottom" Maximum="10" 
+        <Slider x:Name="pageSlider" Margin="128,0,364,68" VerticalAlignment="Bottom" Maximum="10" 
                 TickPlacement="TopLeft" TickFrequency="1" IsSnapToTickEnabled="True" Width="280" ValueChanged="PageNumber_ValueChanged" Height="33" />
         <TextBox x:Name="PageVal" VerticalAlignment="Bottom" Height="23" TextWrapping="Wrap" Text="1" Margin="279,0,477,40" IsEnabled="False"/>
         <Button x:Name="nextPage" VerticalAlignment="Bottom" Content="Next" Height="32" Click="nextPage_Click" Margin="435,0,307,69" RenderTransformOrigin="0.375,0.594"/>
