@@ -13,9 +13,13 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
+
+using static System.Windows.Documents.List;
+
 using System.Web.Script.Serialization;
 
 namespace DemoETraderApp
@@ -24,7 +28,7 @@ namespace DemoETraderApp
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     /// 
-   
+
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -34,8 +38,9 @@ namespace DemoETraderApp
         
         private void ShowBSM(object sender, RoutedEventArgs e)
         {
-           // Show();
+            // Show();
         }
+
 
         public List<EBond> EBondList = new List<EBond>();
         List<EBond> BondList = new List<EBond>();
@@ -45,16 +50,27 @@ namespace DemoETraderApp
             BondList = new List<EBond>();
             
             BondList.Add(obj);
-            return BondList;
+
+        private void ListSetup(object sender, RoutedEventArgs e)
+        {
+            Bondslstbx.Items.Add("AB Stock");
+            Bondslstbx.Items.Add("AE Stock");
+            Bondslstbx.Items.Add("AD Stock");
+            Bondslstbx.Items.Add("AC Stock");
         }
+      
+        
         private void selectbond(object sender, RoutedEventArgs e)
         {
+
             //int index = Bondslstbx.SelectedIndex;
             
             if (Bondslstbx.SelectedIndex == -1)
             {
                 MessageBox.Show("Please select a bond");               
-            }
+
+
+
             else
             {
                 EBond sentebond = (EBond)Bondslstbx.SelectedItem;
@@ -78,6 +94,7 @@ namespace DemoETraderApp
         }
         private void OpenTBWTab(object sender, RoutedEventArgs e)
         {
+
             
             EBond bookingbond = (EBond)Bondslstbx.SelectedItem;
             tabControl.SelectedItem = TBWTab;
@@ -392,6 +409,110 @@ namespace DemoETraderApp
         private void LPtoGs(object sender, RoutedEventArgs e)
         {
             LPto.Text = "";
+
+
+            tabControl.SelectedItem = TBWTab;
+            // Load events...(later..)
+
+
+        }
+
+        private void Search(object sender, RoutedEventArgs e)
+        {
+            var clie = new WebClient();
+            // cli.Headers[HttpRequestHeader.ContentType] = "application/json";
+            string blotter_populate = clie.DownloadString("http://192.168.137.37:8080/EBondTraderWeb/rest/bond/blotter?isin="+textBox_blotter.Text);
+
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            List<Blotter> context = (List<Blotter>)js.Deserialize(blotter_populate, typeof(List<Blotter>));
+
+
+            datagridblotter.ItemsSource = context;
+        }
+
+
+        
+
+        /*      private List<Blotter> blotter_setup()
+              {
+                  List<Blotter> blotterList = new List<Blotter>();
+
+                  Blotter b = new Blotter(1, "UPB042", 'B', DateTime.Today, 100, 1, "INR", 1.995, 'S', DateTime.Today, 1.999);
+                  blotterList.Add(b);
+                  return blotterList;
+
+              }*/
+        public string response;
+
+        //public object BondList { get; private set; }
+        //public List Bond { get; private set; }
+        //public object JsonConvert { get; private set; }
+
+        private void blotter_setup(object sender, RoutedEventArgs e)
+        {
+            //    dataGrid_blotter.ItemsSource = blotter_setup();
+               
+        }
+
+
+
+
+
+        public Stream StringToStream(string s)
+        {
+            MemoryStream stream = new MemoryStream();
+            StreamWriter writer = new StreamWriter(stream);
+            writer.Write(s);
+            writer.Flush();
+            stream.Position = 0;
+            return stream;
+        }
+
+        private void Search_TB_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void textBox_blotter_TextChanged(object sender, TextChangedEventArgs e)
+        {
+      //    List <Bond> = BondList.Item.StartWith(x => x.isin == textBox_blotter.Text);
+        }
+
+        private void datagridblotter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Populate(object sender, RoutedEventArgs e)
+        {
+            var clie = new WebClient();
+           // cli.Headers[HttpRequestHeader.ContentType] = "application/json";
+            string blotter_populate = clie.DownloadString("http://192.168.137.37:8080/EBondTraderWeb/rest/bond/blotter");
+            
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            List<Blotter> context = (List<Blotter>)js.Deserialize(blotter_populate, typeof(List<Blotter>));
+            /*Stream blotterlist = StringToStream(blotter_populate);
+            StreamReader reader = new StreamReader(blotterlist);
+            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Blotter[]));
+            EBond[] context = (EBond[])serializer.ReadObject(EBond);*/
+
+            //           datagridblotter.ItemsSource = context.BuySell;
+
+
+            //json serializer
+            //            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Blotter[]));
+            //           Blotter[] bookedbondlist = (Blotter[])serializer.ReadObject(blotterlist);
+
+            datagridblotter.ItemsSource = context;
+        }
+
+       
+
+        private void textBox_blotter_GotFocus(object sender, RoutedEventArgs e)
+        {
+            textBox_blotter.Text = "";
+
         }
     }
 }
+

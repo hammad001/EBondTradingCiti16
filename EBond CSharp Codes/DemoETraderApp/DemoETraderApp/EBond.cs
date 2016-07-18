@@ -11,7 +11,11 @@ using System.Runtime.Serialization.Json;
 namespace DemoETraderApp
 {
     [DataContract]
+<<<<<<< HEAD
    public class EBond
+=======
+    public class EBond
+>>>>>>> refs/remotes/origin/Amruta
     {
         [DataMember]
         public int bondId { get; set; }
@@ -20,7 +24,11 @@ namespace DemoETraderApp
         [DataMember]
         public string issueDate { get; set; }
         [DataMember]
+<<<<<<< HEAD
         public int settlementDays { get; set; }
+=======
+        public string settlementDays { get; set; }
+>>>>>>> refs/remotes/origin/Amruta
         [DataMember]
         public int faceValue { get; set; }
         [DataMember]
@@ -44,11 +52,19 @@ namespace DemoETraderApp
         [DataMember]
         public string currency { get; set; }
 
+<<<<<<< HEAD
         public EBond(string isin, string issueDate, int settlementDays, int faceValue, double couponRate,
             char couponFrequency, string maturityDate, double lastPrice, double high, double low, double changeInPrice,
             double yeild, string creditRating, string currency)
         {
             
+=======
+        public EBond(string isin, string issueDate, string settlementDays, int faceValue, double couponRate,
+            char couponFrequency, string maturityDate, double lastPrice, double high, double low, double changeInPrice,
+            double yeild, string creditRating, string currency)
+        {
+
+>>>>>>> refs/remotes/origin/Amruta
             this.isin = isin;
             this.issueDate = issueDate;
             this.settlementDays = settlementDays;
