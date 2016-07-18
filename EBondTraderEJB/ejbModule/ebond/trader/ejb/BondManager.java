@@ -27,12 +27,6 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 	@PersistenceContext(unitName = "EBondTraderJPA-PU")
 	EntityManager em;
 
-	public List<EBond> getBondData() {
-		TypedQuery<EBond> query = em.createQuery("SELECT b" + " FROM EBond AS b", EBond.class);
-
-		return (List<EBond>) query.getResultList();
-	}
-
 	public List<BookedBond> getBlotterBonds(String blotterQ) {
 
 		String tempQuery = "SELECT b FROM BookedBond AS b ";
@@ -203,30 +197,7 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 
 	}
 
-	public List<EBond> getTestResult() {
-		// String tempQuery = "Select eb from EBond AS eb WHERE eb.isin =
-		// 'TYE047'";
-		String tempQuery = "Select eb from EBond AS eb WHERE eb.lastPrice BETWEEN 200 AND 300";
-		// String tempQuery = "Select eb from EBond AS eb WHERE eb.maturityDate
-		// BETWEEN '2030-01-01' AND '2040-01-01'";
-		// String newdat = new String();
-		//
-		// try {
-		// Date date = new SimpleDateFormat("dd-MM-yyyy").parse(dat);
-		// newdat = new SimpleDateFormat("yyyy-MM-dd").format(date);
-		// } catch (ParseException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		//
-		// System.out.println(newdat);
-		// String tempQuery = "Select eb from EBond AS eb WHERE eb.maturityDate
-		// = '" + newdat + "'";
 
-		TypedQuery<EBond> query = em.createQuery(tempQuery, EBond.class);
-
-		return (List<EBond>) query.getResultList();
-	}
 
 	public List<EBond> populateTBS(String TbsIsinQ) {
 
