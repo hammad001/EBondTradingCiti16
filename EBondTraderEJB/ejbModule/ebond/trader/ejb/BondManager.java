@@ -13,7 +13,6 @@ import javax.persistence.TypedQuery;
 import ebond.trader.jpa.BookedBond;
 import ebond.trader.jpa.EBond;
 
-//This is an session bean
 @Stateless
 public class BondManager implements BondManagerRemote, BondManagerLocal {
 
