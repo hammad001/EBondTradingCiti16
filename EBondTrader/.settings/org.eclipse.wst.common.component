@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="EBondTrader">
+        <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
+        <dependent-module archiveName="EBondTaderJPA.jar" deploy-path="/lib" handle="module:/resource/EBondTaderJPA/EBondTaderJPA">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="EBondTraderEJB.jar" deploy-path="/" handle="module:/resource/EBondTraderEJB/EBondTraderEJB">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="EBondTraderEJBClient.jar" deploy-path="/" handle="module:/resource/EBondTraderEJBClient/EBondTraderEJBClient">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="EBondTraderWeb.war" deploy-path="/" handle="module:/resource/EBondTraderWeb/EBondTraderWeb">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+    </wb-module>
+</project-modules>
