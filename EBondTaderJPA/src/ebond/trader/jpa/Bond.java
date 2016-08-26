@@ -9,7 +9,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="BONDS")
 public class Bond {
-	
+	//Bond Bean
 	@Id
 	private String isin;
 	private String bondName;
