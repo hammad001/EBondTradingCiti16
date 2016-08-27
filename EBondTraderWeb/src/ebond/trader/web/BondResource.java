@@ -38,18 +38,28 @@ public class BondResource {
 		}
 	}
 	
-	@GET
+	@GET//from Bond Static Maintenance
 	@Produces("application/json")
 	public List<Bond> getBondData() {
+		System.out.println("in BondResource BSM GET");
 		return bean.getBondData();
 	}
 	
-	@POST
+	
+	/*@GET//from Blotter
+	@Produces("application/json")
+	public List<BookedBond> getBondData() {
+		return bean.getBondData();
+	}
+	*/
+	
+	@POST//from Trade Booking Screen
 	@Consumes({"application/json","text/plain"})
 	@Produces({"application/json"})
 	public void acceptOrder(Bond b){
+		System.out.println("in BondResource TBS POST");
 		bean.putBondData(b);
-		System.out.println("Received bond name.");
+		System.out.println("Received bond name:"+b.getBondName());
 		
 	}
 }
