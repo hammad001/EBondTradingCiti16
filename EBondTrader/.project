@@ -3,6 +3,10 @@
 	<name>EBondTrader</name>
 	<comment></comment>
 	<projects>
+		<project>EBondTaderJPA</project>
+		<project>EBondTraderEJB</project>
+		<project>EBondTraderEJBClient</project>
+		<project>EBondTraderWeb</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

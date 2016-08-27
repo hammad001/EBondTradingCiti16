@@ -17,7 +17,7 @@ import javax.ws.rs.QueryParam;
 import ebond.trader.ejb.BondManagerLocal;
 import ebond.trader.jpa.Bond;
 
-//this comment was added by Saransh
+
 @RequestScoped
 @Path("/bond")
 @Produces({ "application/xml", "application/json" })
