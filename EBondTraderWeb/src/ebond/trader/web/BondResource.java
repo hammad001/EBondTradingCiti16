@@ -1,8 +1,10 @@
 package ebond.trader.web;
 
+import java.io.StringReader;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.enterprise.context.RequestScoped;
 import javax.naming.Context;
@@ -15,6 +17,9 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 
 import ebond.trader.ejb.BondManagerLocal;
 import ebond.trader.jpa.Bond;
@@ -41,27 +46,25 @@ public class BondResource {
 	}
 
 	@POST // from Bond Static Maintenance
+	@Consumes("text/plain")
 	@Produces("application/json")
-	@Consumes("application/json")
-	public List<Bond> getBsmBondData(BsmSearchQuery bsq) {
+	public List<Bond> getBsmBondData(String bsq) {
 
 		System.out.println("in BondResource BSM POST");
+		// System.out.println("Entered JSON: " + bsq);
 
-		System.out.println("Entered ISIN: " + bsq.getIsin());
-		System.out.println("Entered Currency: " + bsq.getCurrency());
+		// imported javax.json for these classes
+		JsonReader jsonReader = Json.createReader(new StringReader(bsq));
+		JsonObject bsqJson = jsonReader.readObject();
+		System.out.println("Entered ISIN: " + bsqJson.getString("isin"));
+		// System.out.println("Entered Currency: " +
+		// bsqJson.getString("currency"));
 
-		/*List<String> SearchQueryParams = Arrays.asList("isin", "creditRating", "couponRateFrom", "couponRateTo",
-				"maturityDateFrom", "maturityDateTo", "frequency", "currency");
-		List<String> SearchQueryValues = Arrays.asList(bsq.getIsin(), bsq.getCreditRating(), bsq.getCouponRateFrom(),
-				bsq.getCouponRateTo(), bsq.getMaturityDateFrom(), bsq.getMaturityDateTo(), bsq.getFrequency(),
-				bsq.getCurrency());
-		System.out.println(SearchQueryParams);
-		System.out.println(SearchQueryValues);*/
-		
-		/*return bean.getBondResultSet(bsq.getIsin(), bsq.getCreditRating(), bsq.getCouponRateFrom(),
-				bsq.getCouponRateTo(), bsq.getMaturityDateFrom(), bsq.getMaturityDateTo(), bsq.getFrequency(),
-				bsq.getCurrency());*/
-		return bean.getBondData();
+		return bean.getBondResultSet(bsqJson.getString("isin"), bsqJson.getString("creditRating"),
+				bsqJson.getString("couponRateFrom"), bsqJson.getString("couponRateTo"),
+				bsqJson.getString("maturityDateFrom"), bsqJson.getString("maturityDateTo"),
+				bsqJson.getString("frequency"), bsqJson.getString("currency"));
+		// return bean.getBondData();
 	}
 
 	@GET // from Blotter
@@ -74,6 +77,7 @@ public class BondResource {
 	}
 
 	@POST // from Trade Booking Screen
+	@Path("/TBS")
 	@Consumes({ "application/json", "text/plain" })
 	@Produces({ "application/json" })
 	public void acceptOrder(Bond b) {
@@ -82,4 +86,5 @@ public class BondResource {
 		System.out.println("Received bond name:" + b.getBondName());
 
 	}
+
 }

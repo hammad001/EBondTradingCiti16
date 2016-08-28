@@ -36,7 +36,9 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 	public List<Bond> getBondResultSet(String isin, String creditRating, String couponRateFrom, String couponRateTo,
 			String maturityDateFrom, String maturityDateTo, String frequency, String currency) {
 
-		String tempQuery = "SELECT b from Bond AS b ";// trail
+		String tempQuery = "SELECT b from Bond AS b ";// trailing spaces added
+														// to prevent accidental
+														// concat
 		int notNullCount = -1;
 
 		// blank query case
@@ -75,22 +77,22 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 
 			}
 			// adding couponRateFrom and To__________________________________
-			if (creditRating.length() != 0 && notNullCount == 0) {
+			if (couponRateFrom.length() != 0 && couponRateTo.length()!=0 && notNullCount == 0) {
 				tempQuery = tempQuery + "b.couponRate BETWEEN " + couponRateFrom + " AND " + couponRateTo;
 				notNullCount++;
 
-			} else if (creditRating.length() != 0 && notNullCount > 0) {
+			} else if (couponRateFrom.length() != 0 && couponRateTo.length()!=0 && notNullCount > 0) {
 				tempQuery = tempQuery + " AND ";// safety spaces added
 				tempQuery = tempQuery + "b.couponRate BETWEEN " + couponRateFrom + " AND " + couponRateTo;
 				notNullCount++;
 
 			}
 			// adding maturityDateFrom and To__________________________________
-			if (creditRating.length() != 0 && notNullCount == 0) {
+			if (maturityDateFrom.length() != 0 && maturityDateTo.length() != 0 && notNullCount == 0) {
 				tempQuery = tempQuery + "b.maturityDate BETWEEN " + maturityDateFrom + " AND " + maturityDateTo;
 				notNullCount++;
 
-			} else if (creditRating.length() != 0 && notNullCount > 0) {
+			} else if (maturityDateFrom.length() != 0 && maturityDateTo.length() != 0 && notNullCount > 0) {
 				tempQuery = tempQuery + " AND ";// safety spaces added
 				tempQuery = tempQuery + "b.maturityDate BETWEEN " + maturityDateFrom + " AND " + maturityDateTo;
 				notNullCount++;
@@ -121,7 +123,7 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 				notNullCount++;// any non null String after this will have an
 								// AND clause before it
 
-			} else if (creditRating.length() != 0 && notNullCount > 0) {
+			} else if (currency.length() != 0 && notNullCount > 0) {
 				// if isin is not null,notNullCount>0 we add an AND clause in
 				// between
 				tempQuery = tempQuery + " AND ";// safety spaces added
@@ -131,6 +133,7 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 			}
 		}
 		System.out.println("Executed: " + tempQuery);
+		tempQuery = "SELECT b from Bond AS b ";// DELETE THIS LINE
 		TypedQuery<Bond> query = em.createQuery(tempQuery, Bond.class);
 
 		return (List<Bond>) query.getResultList();
