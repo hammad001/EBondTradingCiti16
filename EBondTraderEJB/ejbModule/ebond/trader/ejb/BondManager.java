@@ -111,7 +111,7 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 				// if isin is not null,notNullCount>0 we add an AND clause in
 				// between
 				tempQuery = tempQuery + " AND ";// safety spaces added
-				tempQuery = tempQuery + "b.frequency=" + frequency;
+				tempQuery = tempQuery + "b.couponFrequency=" + frequency;
 				notNullCount++;
 
 			}
