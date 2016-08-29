@@ -32,6 +32,14 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 
 		return (List<Bond>) query.getResultList();
 	}
+	
+	
+	/*public List<Bond> getBookedBonds() {
+		TypedQuery<Bond> query = em.createQuery("SELECT b" + " FROM BookedBond AS b", Bond.class);
+
+		return (List<Bond>) query.getResultList();
+	}*/
+
 
 	public List<Bond> getBondResultSet(String isin, String creditRating, String couponRateFrom, String couponRateTo,
 			String maturityDateFrom, String maturityDateTo, String frequency, String currency) {

@@ -66,8 +66,10 @@ public class BondResource {
 	@Produces("application/json")
 	@Consumes("text/plain")
 	public List<Bond> getBookedBondData() {
+		// fetches data from BookedBondBeanList, so it needs no Json input
 		System.out.println("in Booked Bond GET");
 		return bean.getBondData();
+		//return bean.getBookedBonds();
 	}
 
 	@POST // from Trade Booking Screen
@@ -75,6 +77,7 @@ public class BondResource {
 	@Consumes({ "application/json", "text/plain" })
 	@Produces({ "application/json" })
 	public void acceptOrder(Bond b) {
+		//fetches data as an entity bean BookedBond, so it needs no Json String input (Auto Parsed)
 		System.out.println("in BondResource TBS POST");
 		bean.putBondData(b);
 		System.out.println("Received bond name:" + b.getBondName());
