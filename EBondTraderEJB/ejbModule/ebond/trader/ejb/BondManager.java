@@ -10,8 +10,11 @@ import javax.persistence.TypedQuery;
 import ebond.trader.jpa.Bond;
 
 //This is an session bean
+<<<<<<< HEAD
 @Remote(BondManagerRemote.class)
 @Local(BondManagerLocal.class)
+=======
+>>>>>>> refs/remotes/origin/Hammad
 @Stateless
 public class BondManager implements BondManagerRemote, BondManagerLocal {
 
