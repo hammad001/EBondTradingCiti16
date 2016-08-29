@@ -9,6 +9,7 @@ import javax.persistence.TypedQuery;
 
 import ebond.trader.jpa.Bond;
 import ebond.trader.jpa.BookedBond;
+import ebond.trader.jpa.EBond;
 
 //This is an session bean
 @Stateless
@@ -28,26 +29,26 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 		em.persist(bondData);
 	}
 
-	public List<Bond> getBondData() {
-		TypedQuery<Bond> query = em.createQuery("SELECT b" + " FROM Bond AS b", Bond.class);
+	public List<EBond> getBondData() {
+		TypedQuery<EBond> query = em.createQuery("SELECT b" + " FROM Bond AS b", EBond.class);
 
-		return (List<Bond>) query.getResultList();
+		return (List<EBond>) query.getResultList();
 	}
 
 	public List<BookedBond> getBlotterBonds(String blotterQ) {
 
 		String tempQuery = "SELECT b FROM BookedBond AS b ";
 		//if blotterQ is not null, add a where clause, else execute as it is
-		if (blotterQ.length() == 0) {
-			tempQuery = tempQuery + " WHERE b.isin=" + blotterQ;
+		if (blotterQ.length() != 0) {
+			tempQuery = tempQuery + " WHERE b.ebond.isin='" + blotterQ+"'";//add quotes
 		}
-
+		System.out.println("Executed in Blotter: "+tempQuery);
 		TypedQuery<BookedBond> query = em.createQuery(tempQuery, BookedBond.class);
 
 		return (List<BookedBond>) query.getResultList();
 	}
 
-	public List<Bond> getBondResultSet(String isin, String creditRating, String couponRateFrom, String couponRateTo,
+	public List<EBond> getBondResultSet(String isin, String creditRating, String couponRateFrom, String couponRateTo,
 			String maturityDateFrom, String maturityDateTo, String frequency, String currency, String yeildFrom,
 			String yeildTo, String lastPriceFrom, String lastPriceTo) {
 
@@ -182,9 +183,9 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 
 		}
 		System.out.println("Executed: " + tempQuery);
-		TypedQuery<Bond> query = em.createQuery(tempQuery, Bond.class);
+		TypedQuery<EBond> query = em.createQuery(tempQuery, EBond.class);
 
-		return (List<Bond>) query.getResultList();
+		return (List<EBond>) query.getResultList();
 	}
 
 }

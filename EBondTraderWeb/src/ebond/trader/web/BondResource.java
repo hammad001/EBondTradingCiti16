@@ -20,6 +20,7 @@ import javax.json.JsonReader;
 import ebond.trader.ejb.BondManagerLocal;
 import ebond.trader.jpa.Bond;
 import ebond.trader.jpa.BookedBond;
+import ebond.trader.jpa.EBond;
 
 @RequestScoped
 @Path("/bond")
@@ -46,7 +47,7 @@ public class BondResource {
 	@Consumes("text/plain")
 	@Produces("application/json")
 	@Path("/BSM")
-	public List<Bond> getBsmBondData(String bsq) {
+	public List<EBond> getBsmBondData(String bsq) {
 
 		System.out.println("in BondResource BSM POST");
 		System.out.println("BSM Received JSON: " + bsq);
@@ -71,8 +72,9 @@ public class BondResource {
 		// fetches data from BookedBondBeanList, so it needs no Json input
 						
 		System.out.println("in Blotter GET");
-		
-		System.out.println("Blotter Search Query ISIN: "+blotterQ);
+		if(blotterQ.length()!=0){
+			System.out.println("Blotter Search Query ISIN: "+blotterQ);
+		}
 		
 		return bean.getBlotterBonds(blotterQ);
 		
