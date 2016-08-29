@@ -7,6 +7,7 @@
 		<project>EBondTraderEJB</project>
 		<project>EBondTraderEJBClient</project>
 		<project>EBondTraderWeb</project>
+		<project>EBondTraderJPADemo</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -1,5 +1,6 @@
 package ebond.trader.jpa;
 
+//This is an Entity Bean
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
