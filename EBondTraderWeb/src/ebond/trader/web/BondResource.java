@@ -7,10 +7,12 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -60,19 +62,22 @@ public class BondResource {
 		// return bean.getBondData();
 	}
 
-	@POST // from Blotter
+	@GET // from Blotter
 	@Path("/Blotter")
 	@Produces("application/json")
 	@Consumes("text/plain")
-	public List<Bond> getBookedBondData(String blotterQ) {
+	public List<Bond> getBookedBondData(@QueryParam("isin") @DefaultValue("") String blotterQ) {
 		// fetches data from BookedBondBeanList, so it needs no Json input
 		
-		JsonReader jsonReaderBlotter = Json.createReader(new StringReader(blotterQ));
-		JsonObject blotterJson = jsonReaderBlotter.readObject();
+		//JsonReader jsonReaderBlotter = Json.createReader(new StringReader(blotterQ));
+		//JsonObject blotterJson = jsonReaderBlotter.readObject();
 		
-		System.out.println("Blotter Search Query ISIN: "+blotterJson.getInt("isin"));
+		//System.out.println("Blotter Search Query ISIN: "+blotterJson.getInt("isin"));
+		
 		
 		System.out.println("in Booked Bond GET");
+		
+		System.out.println("Blotter Search Query ISIN: "+blotterQ);
 		return bean.getBondData();
 		//return bean.getBookedBonds();
 	}
