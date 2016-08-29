@@ -19,6 +19,7 @@ import javax.json.JsonReader;
 
 import ebond.trader.ejb.BondManagerLocal;
 import ebond.trader.jpa.Bond;
+import ebond.trader.jpa.BookedBond;
 
 @RequestScoped
 @Path("/bond")
@@ -66,27 +67,26 @@ public class BondResource {
 	@Path("/Blotter")
 	@Produces("application/json")
 	@Consumes("text/plain")
-	public List<Bond> getBookedBondData(@QueryParam("isin") @DefaultValue("") String blotterQ) {
+	public List<BookedBond> getBookedBondData(@QueryParam("isin") @DefaultValue("") String blotterQ) {
 		// fetches data from BookedBondBeanList, so it needs no Json input
 						
 		System.out.println("in Blotter GET");
 		
 		System.out.println("Blotter Search Query ISIN: "+blotterQ);
 		
-		//return bean.getBlotterBonds(blotterQ);
-		return bean.getBondData();
-		//return bean.getBookedBonds();
+		return bean.getBlotterBonds(blotterQ);
+		
 	}
 
 	@POST // from Trade Booking Screen
 	@Path("/TBS")
 	@Consumes({ "text/plain" })
 	@Produces({ "application/json" })
-	public void acceptOrder(Bond b) {
+	public void acceptBooking(BookedBond b) {
 		//fetches data as an entity bean BookedBond, so it needs no Json String input (Auto Parsed)
 		System.out.println("in BondResource TBS POST");
-		bean.putBondData(b);
-		System.out.println("Received bond name:" + b.getBondName());
+		bean.putBookedBondData(b);
+		//System.out.println("Received bond name:" + b.getBondName());
 
 	}
 

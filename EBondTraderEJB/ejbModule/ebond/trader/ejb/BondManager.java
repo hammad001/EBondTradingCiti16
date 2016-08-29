@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import ebond.trader.jpa.Bond;
+import ebond.trader.jpa.BookedBond;
 
 //This is an session bean
 @Stateless
@@ -23,7 +24,7 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 	@PersistenceContext(unitName = "EBondTraderJPA-PU")
 	EntityManager em;
 
-	public void putBondData(Bond bondData) {
+	public void putBookedBondData(BookedBond bondData) {
 		em.persist(bondData);
 	}
 
@@ -33,7 +34,7 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 		return (List<Bond>) query.getResultList();
 	}
 
-	public List<Bond> getBlotterBonds(String blotterQ) {
+	public List<BookedBond> getBlotterBonds(String blotterQ) {
 
 		String tempQuery = "SELECT b FROM BookedBond AS b ";
 		//if blotterQ is not null, add a where clause, else execute as it is
@@ -41,9 +42,9 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 			tempQuery = tempQuery + " WHERE b.isin=" + blotterQ;
 		}
 
-		TypedQuery<Bond> query = em.createQuery(tempQuery, Bond.class);
+		TypedQuery<BookedBond> query = em.createQuery(tempQuery, BookedBond.class);
 
-		return (List<Bond>) query.getResultList();
+		return (List<BookedBond>) query.getResultList();
 	}
 
 	public List<Bond> getBondResultSet(String isin, String creditRating, String couponRateFrom, String couponRateTo,
