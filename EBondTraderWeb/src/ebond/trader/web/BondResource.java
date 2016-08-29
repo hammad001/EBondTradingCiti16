@@ -45,13 +45,13 @@ public class BondResource {
 	@Produces("application/json")
 	public List<EBond> getBsmBondData(String bsq) {
 
-		System.out.println("in BondResource BSM POST");
+		//System.out.println("in BondResource BSM POST");
 		// System.out.println("Entered JSON: " + bsq);
 
 		// imported javax.json for these classes
 		JsonReader jsonReader = Json.createReader(new StringReader(bsq));
 		JsonObject bsqJson = jsonReader.readObject();
-		System.out.println("Entered ISIN: " + bsqJson.getString("isin"));
+		//System.out.println("Entered ISIN: " + bsqJson.getString("isin"));
 
 		return bean.getBondResultSet(bsqJson.getString("isin"), bsqJson.getString("creditRating"),
 				bsqJson.getString("couponRateFrom"), bsqJson.getString("couponRateTo"),

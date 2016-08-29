@@ -114,12 +114,12 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 			}
 			// adding maturityDateFrom and To__________________________________
 			if (maturityDateFrom.length() != 0 && maturityDateTo.length() != 0 && notNullCount == 0) {
-				tempQuery = tempQuery + "b.maturityDate BETWEEN '" + formatMDFrom + "' AND '" + formatMDFrom + "'";
+				tempQuery = tempQuery + "b.maturityDate BETWEEN '" + formatMDFrom + "' AND '" + formatMDTo + "'";
 				notNullCount++;
 
 			} else if (maturityDateFrom.length() != 0 && maturityDateTo.length() != 0 && notNullCount > 0) {
 				tempQuery = tempQuery + " AND ";// safety spaces added
-				tempQuery = tempQuery + "b.maturityDate BETWEEN '" + formatMDTo + "' AND '" + formatMDTo + "'";
+				tempQuery = tempQuery + "b.maturityDate BETWEEN '" + formatMDFrom + "' AND '" + formatMDTo + "'";
 				notNullCount++;
 
 			}
@@ -128,7 +128,7 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 			if (frequency.length() != 0 && notNullCount == 0) {
 				// if isin is null,notNullCount is still 0 we proceed after
 				// WHERE
-				tempQuery = tempQuery + "b.frequency=" + frequency;
+				tempQuery = tempQuery + "b.frequency='" + frequency  + "'";
 				notNullCount++;// any non null String after this will have an
 								// AND clause before it
 
@@ -136,7 +136,7 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 				// if isin is not null,notNullCount>0 we add an AND clause in
 				// between
 				tempQuery = tempQuery + " AND ";// safety spaces added
-				tempQuery = tempQuery + "b.couponFrequency=" + frequency;
+				tempQuery = tempQuery + "b.couponFrequency='" + frequency+"'";
 				notNullCount++;
 
 			}
