@@ -53,7 +53,7 @@ public class BondResource {
 		System.out.println("Entered ISIN: " + bsqJson.getString("isin"));
 		// System.out.println("Entered Currency: " +
 		// bsqJson.getString("currency"));
-
+		System.out.println(bean);   // Checking exception.  Delete in final code
 		return bean.getBondResultSet(bsqJson.getString("isin"), bsqJson.getString("creditRating"),
 				bsqJson.getString("couponRateFrom"), bsqJson.getString("couponRateTo"),
 				bsqJson.getString("maturityDateFrom"), bsqJson.getString("maturityDateTo"),
