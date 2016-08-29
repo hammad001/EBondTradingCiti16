@@ -19,4 +19,6 @@ public interface BondManagerLocal {
 			String yeildTo, String lastPriceFrom, String lastPriceTo);
 	List<BookedBond> getBlotterBonds(String blotterQ);
 	EBond populateTBS(String TbsIsinQ);
+	public List<EBond> getTestResult();
+	
 }
