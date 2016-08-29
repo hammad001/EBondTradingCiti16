@@ -56,7 +56,7 @@ public class BondResource {
 		return bean.getBondResultSet(bsqJson.getString("isin"), bsqJson.getString("creditRating"),
 				bsqJson.getString("couponRateFrom"), bsqJson.getString("couponRateTo"),
 				bsqJson.getString("maturityDateFrom"), bsqJson.getString("maturityDateTo"),
-				bsqJson.getString("frequency"), bsqJson.getString("currency"), bsqJson.getString("yeildFrom"), bsqJson.getString("yeildFrom"), bsqJson.getString("lastPriceFrom"), bsqJson.getString("lastPriceFrom"));
+				bsqJson.getString("frequency"), bsqJson.getString("currency"), bsqJson.getString("yeildFrom"), bsqJson.getString("yeildTo"), bsqJson.getString("lastPriceFrom"), bsqJson.getString("lastPriceTo"));
 		// return bean.getBondData();
 	}
 
