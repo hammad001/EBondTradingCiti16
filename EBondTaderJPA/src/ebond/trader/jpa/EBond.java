@@ -1,7 +1,8 @@
 package ebond.trader.jpa;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
+
 
 import javax.persistence.*;
 

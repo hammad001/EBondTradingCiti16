@@ -17,6 +17,7 @@ import javax.json.JsonReader;
 
 import ebond.trader.ejb.BondManagerLocal;
 import ebond.trader.jpa.Bond;
+import ebond.trader.jpa.EBond;
 
 @RequestScoped
 @Path("/bond")
@@ -42,7 +43,7 @@ public class BondResource {
 	@POST // from Bond Static Maintenance
 	@Consumes("text/plain")
 	@Produces("application/json")
-	public List<Bond> getBsmBondData(String bsq) {
+	public List<EBond> getBsmBondData(String bsq) {
 
 		System.out.println("in BondResource BSM POST");
 		// System.out.println("Entered JSON: " + bsq);
@@ -53,7 +54,7 @@ public class BondResource {
 		System.out.println("Entered ISIN: " + bsqJson.getString("isin"));
 		// System.out.println("Entered Currency: " +
 		// bsqJson.getString("currency"));
-		System.out.println(bean);   // Checking exception.  Delete in final code
+		System.out.println("bsq details : "+bsqJson);   // Checking exception.  Delete in final code
 		return bean.getBondResultSet(bsqJson.getString("isin"), bsqJson.getString("creditRating"),
 				bsqJson.getString("couponRateFrom"), bsqJson.getString("couponRateTo"),
 				bsqJson.getString("maturityDateFrom"), bsqJson.getString("maturityDateTo"),
@@ -65,7 +66,7 @@ public class BondResource {
 	// @Path("/blotter")
 	@Produces("application/json")
 	@Consumes("text/plain")
-	public List<Bond> getBookedBondData() {
+	public List<EBond> getBookedBondData() {
 		// fetches data from BookedBondBeanList, so it needs no Json input
 		System.out.println("in Booked Bond GET");
 		return bean.getBondData();
@@ -77,12 +78,22 @@ public class BondResource {
 	@Path("/TBS")
 	@Consumes({ "application/json", "text/plain" })
 	@Produces({ "application/json" })
-	public void acceptOrder(Bond b) {
+	public void acceptOrder(EBond b) {
 		//fetches data as an entity bean BookedBond, so it needs no Json String input (Auto Parsed)
 		System.out.println("in BondResource TBS POST ");
 		bean.putBondData(b);
-		System.out.println("Received bond name:" + b.getBondName());
+		//System.out.println("Received bond name:" + b.getBondName());
 
 	}
+	
+	// A test function to test individual queries
+//	@GET
+//	@Path("/test")
+//	@Produces("application/json")
+//	public List<EBond> testFunction(){
+//		return bean.getResultFromQuery();
+//	}
+	
+//		return bean.getResultFromQuery();
 
 }
