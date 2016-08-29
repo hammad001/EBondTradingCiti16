@@ -42,29 +42,36 @@ public class BondResource {
 	@POST // from Bond Static Maintenance
 	@Consumes("text/plain")
 	@Produces("application/json")
+	@Path("/BSM")
 	public List<Bond> getBsmBondData(String bsq) {
 
 		System.out.println("in BondResource BSM POST");
-		// System.out.println("Entered JSON: " + bsq);
+		System.out.println("BSM Received JSON: " + bsq);
 
 		// imported javax.json for these classes
-		JsonReader jsonReader = Json.createReader(new StringReader(bsq));
-		JsonObject bsqJson = jsonReader.readObject();
-		System.out.println("Entered ISIN: " + bsqJson.getString("isin"));
+		JsonReader jsonReaderBSM = Json.createReader(new StringReader(bsq));
+		JsonObject bsqJson = jsonReaderBSM.readObject();
+		System.out.println("BSM Search Query ISIN: " + bsqJson.getString("isin"));
 
 		return bean.getBondResultSet(bsqJson.getString("isin"), bsqJson.getString("creditRating"),
 				bsqJson.getString("couponRateFrom"), bsqJson.getString("couponRateTo"),
 				bsqJson.getString("maturityDateFrom"), bsqJson.getString("maturityDateTo"),
-				bsqJson.getString("frequency"), bsqJson.getString("currency"));
+				bsqJson.getString("frequency"), bsqJson.getString("currency"),bsqJson.getString("lastPriceFrom"),bsqJson.getString("lastPriceTo"),bsqJson.getString("yield"));
 		// return bean.getBondData();
 	}
 
-	@GET // from Blotter
-	// @Path("/blotter")
+	@POST // from Blotter
+	@Path("/Blotter")
 	@Produces("application/json")
 	@Consumes("text/plain")
-	public List<Bond> getBookedBondData() {
+	public List<Bond> getBookedBondData(String blotterQ) {
 		// fetches data from BookedBondBeanList, so it needs no Json input
+		
+		JsonReader jsonReaderBlotter = Json.createReader(new StringReader(blotterQ));
+		JsonObject blotterJson = jsonReaderBlotter.readObject();
+		
+		System.out.println("Blotter Search Query ISIN: "+blotterJson.getInt("isin"));
+		
 		System.out.println("in Booked Bond GET");
 		return bean.getBondData();
 		//return bean.getBookedBonds();

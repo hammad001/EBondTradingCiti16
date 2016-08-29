@@ -32,19 +32,19 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 
 		return (List<Bond>) query.getResultList();
 	}
-	
-	
-	/*public List<Bond> getBookedBonds() {
-		TypedQuery<Bond> query = em.createQuery("SELECT b" + " FROM BookedBond AS b", Bond.class);
 
-		return (List<Bond>) query.getResultList();
-	}*/
-
+	/*
+	 * public List<Bond> getBookedBonds() { TypedQuery<Bond> query =
+	 * em.createQuery("SELECT b" + " FROM BookedBond AS b", Bond.class);
+	 * 
+	 * return (List<Bond>) query.getResultList(); }
+	 */
 
 	public List<Bond> getBondResultSet(String isin, String creditRating, String couponRateFrom, String couponRateTo,
-			String maturityDateFrom, String maturityDateTo, String frequency, String currency) {
+			String maturityDateFrom, String maturityDateTo, String frequency, String currency, String lastPriceFrom,
+			String lastPriceTo, String yield) {
 
-		String tempQuery = "SELECT b from Bond AS b ";// trailing spaces added
+		String tempQuery = "SELECT b from eBond AS b ";// trailing spaces added
 														// to prevent accidental
 														// concat
 		int notNullCount = -1;
@@ -52,7 +52,8 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 		// blank query case
 		if (isin.length() == 0 && creditRating.length() == 0 && couponRateFrom.length() == 0
 				&& couponRateTo.length() == 0 && maturityDateFrom.length() == 0 && maturityDateTo.length() == 0
-				&& frequency.length() == 0 && currency.length() == 0) {
+				&& frequency.length() == 0 && currency.length() == 0 && lastPriceFrom.length() == 0
+				&& lastPriceTo.length() == 0 && yield.length() == 0) {
 			System.out.println("Search is null");
 
 		} else {
@@ -85,11 +86,11 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 
 			}
 			// adding couponRateFrom and To__________________________________
-			if (couponRateFrom.length() != 0 && couponRateTo.length()!=0 && notNullCount == 0) {
+			if (couponRateFrom.length() != 0 && couponRateTo.length() != 0 && notNullCount == 0) {
 				tempQuery = tempQuery + "b.couponRate BETWEEN " + couponRateFrom + " AND " + couponRateTo;
 				notNullCount++;
 
-			} else if (couponRateFrom.length() != 0 && couponRateTo.length()!=0 && notNullCount > 0) {
+			} else if (couponRateFrom.length() != 0 && couponRateTo.length() != 0 && notNullCount > 0) {
 				tempQuery = tempQuery + " AND ";// safety spaces added
 				tempQuery = tempQuery + "b.couponRate BETWEEN " + couponRateFrom + " AND " + couponRateTo;
 				notNullCount++;
@@ -139,6 +140,30 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 				notNullCount++;
 
 			}
+			// adding lastPriceFrom and To__________________________________
+			if (lastPriceFrom.length() != 0 && lastPriceTo.length() != 0 && notNullCount == 0) {
+				tempQuery = tempQuery + "b.lastPrice BETWEEN " + lastPriceFrom + " AND " + lastPriceTo;
+				notNullCount++;
+
+			} else if (lastPriceFrom.length() != 0 && lastPriceTo.length() != 0 && notNullCount > 0) {
+				tempQuery = tempQuery + " AND ";// safety spaces added
+				tempQuery = tempQuery + "b.lastPrice BETWEEN " + lastPriceFrom + " AND " + lastPriceTo;
+				notNullCount++;
+
+			}
+			// adding yield__________________________________
+			if (yield.length() != 0 && notNullCount == 0) {
+				tempQuery = tempQuery + "b.yield=" + yield;
+				notNullCount++;// any non null String after this will have an
+								// AND clause before it
+
+			} else if (yield.length() != 0 && notNullCount > 0) {
+				tempQuery = tempQuery + " AND ";// safety spaces added
+				tempQuery = tempQuery + "b.yield=" + yield;
+				notNullCount++;
+
+			}
+
 		}
 		System.out.println("Executed: " + tempQuery);
 		tempQuery = "SELECT b from Bond AS b ";// DELETE THIS LINE
