@@ -41,10 +41,16 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 	 */
 
 	public List<Bond> getBondResultSet(String isin, String creditRating, String couponRateFrom, String couponRateTo,
+<<<<<<< HEAD
 			String maturityDateFrom, String maturityDateTo, String frequency, String currency, String lastPriceFrom,
 			String lastPriceTo, String yield) {
 
 		String tempQuery = "SELECT b from eBond AS b ";// trailing spaces added
+=======
+			String maturityDateFrom, String maturityDateTo, String frequency, String currency, String yeildFrom, String yeildTo, String lastPriceFrom, String lastPriceTo) {
+
+		String tempQuery = "SELECT b from EBond AS b ";// trailing spaces added
+>>>>>>> refs/remotes/origin/Hammad
 														// to prevent accidental
 														// concat
 		int notNullCount = -1;
@@ -52,8 +58,12 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 		// blank query case
 		if (isin.length() == 0 && creditRating.length() == 0 && couponRateFrom.length() == 0
 				&& couponRateTo.length() == 0 && maturityDateFrom.length() == 0 && maturityDateTo.length() == 0
+<<<<<<< HEAD
 				&& frequency.length() == 0 && currency.length() == 0 && lastPriceFrom.length() == 0
 				&& lastPriceTo.length() == 0 && yield.length() == 0) {
+=======
+				&& frequency.length() == 0 && currency.length() == 0 && yeildFrom.length() == 0 && yeildFrom.length() == 0 && lastPriceFrom.length()==0 && lastPriceTo.length()==0) {
+>>>>>>> refs/remotes/origin/Hammad
 			System.out.println("Search is null");
 
 		} else {
@@ -138,6 +148,28 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 				tempQuery = tempQuery + " AND ";// safety spaces added
 				tempQuery = tempQuery + "b.currency=" + currency;
 				notNullCount++;
+				
+			}
+			
+			if (yeildFrom.length() != 0 && yeildTo.length() != 0 && notNullCount == 0) {
+				tempQuery = tempQuery + "b.yeild BETWEEN " + yeildFrom + " AND " + yeildTo;
+				notNullCount++;
+
+			} else if (yeildFrom.length() != 0 && yeildTo.length() != 0 && notNullCount > 0) {
+				tempQuery = tempQuery + " AND ";// safety spaces added
+				tempQuery = tempQuery + "b.yeild BETWEEN " + yeildFrom + " AND " + yeildTo;
+				notNullCount++;
+
+			}
+			
+			if (lastPriceFrom.length() != 0 && lastPriceTo.length() != 0 && notNullCount == 0) {
+				tempQuery = tempQuery + "b.lastPrice BETWEEN " + lastPriceFrom + " AND " + lastPriceTo;
+				notNullCount++;
+
+			} else if (lastPriceFrom.length() != 0 && lastPriceTo.length() != 0 && notNullCount > 0) {
+				tempQuery = tempQuery + " AND ";// safety spaces added
+				tempQuery = tempQuery + "b.lastPrice BETWEEN " + lastPriceFrom + " AND " + lastPriceTo;
+				notNullCount++;
 
 			}
 			// adding lastPriceFrom and To__________________________________
@@ -166,10 +198,10 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 
 		}
 		System.out.println("Executed: " + tempQuery);
-		tempQuery = "SELECT b from Bond AS b ";// DELETE THIS LINE
 		TypedQuery<Bond> query = em.createQuery(tempQuery, Bond.class);
 
 		return (List<Bond>) query.getResultList();
 	}
+
 
 }
