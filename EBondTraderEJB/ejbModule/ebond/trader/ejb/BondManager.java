@@ -33,12 +33,18 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 		return (List<Bond>) query.getResultList();
 	}
 
-	/*
-	 * public List<Bond> getBookedBonds() { TypedQuery<Bond> query =
-	 * em.createQuery("SELECT b" + " FROM BookedBond AS b", Bond.class);
-	 * 
-	 * return (List<Bond>) query.getResultList(); }
-	 */
+	public List<Bond> getBlotterBonds(String blotterQ) {
+
+		String tempQuery = "SELECT b FROM BookedBond AS b ";
+		//if blotterQ is not null, add a where clause, else execute as it is
+		if (blotterQ.length() == 0) {
+			tempQuery = tempQuery + " WHERE b.isin=" + blotterQ;
+		}
+
+		TypedQuery<Bond> query = em.createQuery(tempQuery, Bond.class);
+
+		return (List<Bond>) query.getResultList();
+	}
 
 	public List<Bond> getBondResultSet(String isin, String creditRating, String couponRateFrom, String couponRateTo,
 			String maturityDateFrom, String maturityDateTo, String frequency, String currency, String yeildFrom,

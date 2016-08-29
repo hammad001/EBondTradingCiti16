@@ -68,23 +68,19 @@ public class BondResource {
 	@Consumes("text/plain")
 	public List<Bond> getBookedBondData(@QueryParam("isin") @DefaultValue("") String blotterQ) {
 		// fetches data from BookedBondBeanList, so it needs no Json input
-		
-		//JsonReader jsonReaderBlotter = Json.createReader(new StringReader(blotterQ));
-		//JsonObject blotterJson = jsonReaderBlotter.readObject();
-		
-		//System.out.println("Blotter Search Query ISIN: "+blotterJson.getInt("isin"));
-		
-		
-		System.out.println("in Booked Bond GET");
+						
+		System.out.println("in Blotter GET");
 		
 		System.out.println("Blotter Search Query ISIN: "+blotterQ);
+		
+		//return bean.getBlotterBonds(blotterQ);
 		return bean.getBondData();
 		//return bean.getBookedBonds();
 	}
 
 	@POST // from Trade Booking Screen
 	@Path("/TBS")
-	@Consumes({ "application/json", "text/plain" })
+	@Consumes({ "text/plain" })
 	@Produces({ "application/json" })
 	public void acceptOrder(Bond b) {
 		//fetches data as an entity bean BookedBond, so it needs no Json String input (Auto Parsed)
