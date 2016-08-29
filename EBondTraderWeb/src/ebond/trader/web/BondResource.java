@@ -51,8 +51,6 @@ public class BondResource {
 		JsonReader jsonReader = Json.createReader(new StringReader(bsq));
 		JsonObject bsqJson = jsonReader.readObject();
 		System.out.println("Entered ISIN: " + bsqJson.getString("isin"));
-		// System.out.println("Entered Currency: " +
-		// bsqJson.getString("currency"));
 
 		return bean.getBondResultSet(bsqJson.getString("isin"), bsqJson.getString("creditRating"),
 				bsqJson.getString("couponRateFrom"), bsqJson.getString("couponRateTo"),
