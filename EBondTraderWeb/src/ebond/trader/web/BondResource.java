@@ -42,10 +42,6 @@ public class BondResource {
 	@POST // from Bond Static Maintenance
 	@Consumes("text/plain")
 	@Produces("application/json")
-<<<<<<< HEAD
-	public List<Bond> getBondData() {
-		//System.out.println("ENTEREd get method");
-=======
 	public List<Bond> getBsmBondData(String bsq) {
 
 		System.out.println("in BondResource BSM POST");
@@ -72,17 +68,10 @@ public class BondResource {
 	public List<Bond> getBookedBondData() {
 		// fetches data from BookedBondBeanList, so it needs no Json input
 		System.out.println("in Booked Bond GET");
->>>>>>> refs/remotes/origin/SaranshKejriwal
 		return bean.getBondData();
 		//return bean.getBookedBonds();
 	}
-<<<<<<< HEAD
-	
-	@POST
-	@Consumes({"application/json","text/plain"})	
-	@Produces({"application/json"})
-	public void acceptOrder(Bond b){
-=======
+
 
 	@POST // from Trade Booking Screen
 	@Path("/TBS")
@@ -90,8 +79,7 @@ public class BondResource {
 	@Produces({ "application/json" })
 	public void acceptOrder(Bond b) {
 		//fetches data as an entity bean BookedBond, so it needs no Json String input (Auto Parsed)
-		System.out.println("in BondResource TBS POST");
->>>>>>> refs/remotes/origin/SaranshKejriwal
+		System.out.println("in BondResource TBS POST ");
 		bean.putBondData(b);
 		System.out.println("Received bond name:" + b.getBondName());
 

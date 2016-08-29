@@ -10,7 +10,6 @@ import javax.persistence.TypedQuery;
 import ebond.trader.jpa.Bond;
 
 //This is an session bean
-<<<<<<< HEAD
 @Remote(BondManagerRemote.class)
 @Local(BondManagerLocal.class)
 @Stateless
@@ -30,39 +29,13 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
     	em.persist(bondData);
     }
     
-    public List<Bond> getBondData(){
-		TypedQuery<Bond> query = em.createQuery("SELECT b"+
-				" FROM Bond AS b",Bond.class);
-
-		return (List<Bond>)query.getResultList();
-    }
-    
-    public List<Bond> getBondResultSet(String isin, String creditRating, String couponRateFrom, String couponRateTo,
-=======
-@Stateless
-public class BondManager implements BondManagerRemote, BondManagerLocal {
-
-	/**
-	 * Default constructor.
-	 */
-	public BondManager() {
-		// TODO Auto-generated constructor stub
-	}
-
-	@PersistenceContext(unitName = "EBondTraderJPA-PU")
-	EntityManager em;
-
-	public void putBondData(Bond bondData) {
-		em.persist(bondData);
-	}
-
 	public List<Bond> getBondData() {
 		TypedQuery<Bond> query = em.createQuery("SELECT b" + " FROM Bond AS b", Bond.class);
 
 		return (List<Bond>) query.getResultList();
 	}
-	
-	
+    
+ 	
 	/*public List<Bond> getBookedBonds() {
 		TypedQuery<Bond> query = em.createQuery("SELECT b" + " FROM BookedBond AS b", Bond.class);
 
@@ -71,7 +44,6 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 
 
 	public List<Bond> getBondResultSet(String isin, String creditRating, String couponRateFrom, String couponRateTo,
->>>>>>> refs/remotes/origin/SaranshKejriwal
 			String maturityDateFrom, String maturityDateTo, String frequency, String currency) {
 
 		String tempQuery = "SELECT b from Bond AS b ";// trailing spaces added
