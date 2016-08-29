@@ -41,11 +41,12 @@ public class BondResource {
 	@GET
 	@Produces("application/json")
 	public List<Bond> getBondData() {
+		//System.out.println("ENTEREd get method");
 		return bean.getBondData();
 	}
 	
 	@POST
-	@Consumes({"application/json","text/plain"})
+	@Consumes({"application/json","text/plain"})	
 	@Produces({"application/json"})
 	public void acceptOrder(Bond b){
 		bean.putBondData(b);
