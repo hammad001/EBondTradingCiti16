@@ -18,4 +18,5 @@ public interface BondManagerLocal {
 			String maturityDateFrom, String maturityDateTo, String frequency, String currency, String yeildFrom,
 			String yeildTo, String lastPriceFrom, String lastPriceTo);
 	List<BookedBond> getBlotterBonds(String blotterQ);
+	EBond populateTBS(String TbsIsinQ);
 }

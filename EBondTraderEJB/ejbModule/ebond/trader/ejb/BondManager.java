@@ -30,7 +30,7 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 	}
 
 	public List<EBond> getBondData() {
-		TypedQuery<EBond> query = em.createQuery("SELECT b" + " FROM Bond AS b", EBond.class);
+		TypedQuery<EBond> query = em.createQuery("SELECT b" + " FROM EBond AS b", EBond.class);
 
 		return (List<EBond>) query.getResultList();
 	}
@@ -38,11 +38,12 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 	public List<BookedBond> getBlotterBonds(String blotterQ) {
 
 		String tempQuery = "SELECT b FROM BookedBond AS b ";
-		//if blotterQ is not null, add a where clause, else execute as it is
+		// if blotterQ is not null, add a where clause, else execute as it is
 		if (blotterQ.length() != 0) {
-			tempQuery = tempQuery + " WHERE b.ebond.isin='" + blotterQ+"'";//add quotes
+			tempQuery = tempQuery + " WHERE b.ebond.isin='" + blotterQ + "'";// add
+																				// quotes
 		}
-		System.out.println("Executed in Blotter: "+tempQuery);
+		System.out.println("Executed in Blotter: " + tempQuery);
 		TypedQuery<BookedBond> query = em.createQuery(tempQuery, BookedBond.class);
 
 		return (List<BookedBond>) query.getResultList();
@@ -186,6 +187,25 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 		TypedQuery<EBond> query = em.createQuery(tempQuery, EBond.class);
 
 		return (List<EBond>) query.getResultList();
+	}
+
+	public EBond populateTBS(String TbsIsinQ) {
+
+		String tempQuery = "SELECT b FROM EBond AS b ";
+		// if blotterQ is not null, add a where clause, else execute as it is
+		if (TbsIsinQ.length() != 0) {
+			tempQuery = tempQuery + " WHERE b.isin='" + TbsIsinQ + "'";// add
+																				// quotes
+		}
+		System.out.println("Populated in TBS: " + tempQuery);
+		TypedQuery<EBond> query = em.createQuery(tempQuery, EBond.class);
+
+		return (EBond) query.getResultList().get(0);//java.util.ArrayList cannot be cast to ebond.trader.jpa.EBond
+
+	}
+
+	public void placeBooking() {
+
 	}
 
 }
