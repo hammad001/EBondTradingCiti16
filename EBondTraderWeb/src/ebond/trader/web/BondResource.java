@@ -7,16 +7,20 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 
 import ebond.trader.ejb.BondManagerLocal;
-import ebond.trader.jpa.Bond;
+
+import ebond.trader.jpa.BookedBond;
+
 import ebond.trader.jpa.EBond;
 
 @RequestScoped
@@ -53,6 +57,7 @@ public class BondResource {
 		JsonObject bsqJson = jsonReader.readObject();
 		//System.out.println("Entered ISIN: " + bsqJson.getString("isin"));
 
+
 		return bean.getBondResultSet(bsqJson.getString("isin"), bsqJson.getString("creditRating"),
 				bsqJson.getString("couponRateFrom"), bsqJson.getString("couponRateTo"),
 				bsqJson.getString("maturityDateFrom"), bsqJson.getString("maturityDateTo"),
@@ -61,28 +66,34 @@ public class BondResource {
 	}
 
 	@GET // from Blotter
-	// @Path("/blotter")
+	@Path("/Blotter")
+	//@Consumes("text/plain")//DO NOT ADD Consumes Annotation to a GET 
 	@Produces("application/json")
-	@Consumes("text/plain")
-	public List<Bond> getBookedBondData() {
+	public List<BookedBond> getBookedBondData(@QueryParam("isin") @DefaultValue("") String blotterQ) {
 		// fetches data from BookedBondBeanList, so it needs no Json input
-		System.out.println("in Booked Bond GET");
-		return bean.getBondData();
-		//return bean.getBookedBonds();
+						
+		System.out.println("in Blotter GET");
+		if(blotterQ.length()!=0){
+			System.out.println("Blotter Search Query ISIN: "+blotterQ);
+		}
+		
+		return bean.getBlotterBonds(blotterQ);
+		
 	}
 
 	@POST // from Trade Booking Screen
 	@Path("/TBS")
-	@Consumes({ "text/plain" })
+	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
-	public void acceptOrder(Bond b) {
+	public void acceptBooking(BookedBond b) {
 		//fetches data as an entity bean BookedBond, so it needs no Json String input (Auto Parsed)
 		System.out.println("in BondResource TBS POST");
-		bean.putBondData(b);
-		System.out.println("Received bond name:" + b.getBondName());
+		bean.putBookedBondData(b);
+		//System.out.println("Received bond name:" + b.getBondName());
 
 	}
 	
+
 	@GET
 	@Path("/test")
 	@Produces({ "application/json" })
@@ -92,4 +103,19 @@ public class BondResource {
 		return bean.getTestResult();
 	}
 
+	
+	@GET // from Trade Booking Screen
+	@Path("/TBS")
+	//@Consumes({ "text/plain" })//DO NOT ADD @Consumes Annotation to GET
+	@Produces({ "application/json" })
+	public EBond populateBooking(@QueryParam("isin") @DefaultValue("") String TbsIsinQ) {
+		//fetches data as an entity bean BookedBond, so it needs no Json String input (Auto Parsed)
+		System.out.println("in BondResource TBS GET, Looking for: "+TbsIsinQ );
+		return bean.populateTBS(TbsIsinQ);
+		//System.out.println("Received bond name:" + b.getBondName());
+		
+	}
+
+	
+	
 }
