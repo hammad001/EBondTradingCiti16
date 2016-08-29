@@ -17,6 +17,7 @@ import javax.json.JsonReader;
 
 import ebond.trader.ejb.BondManagerLocal;
 import ebond.trader.jpa.Bond;
+import ebond.trader.jpa.EBond;
 
 @RequestScoped
 @Path("/bond")
@@ -42,7 +43,7 @@ public class BondResource {
 	@POST // from Bond Static Maintenance
 	@Consumes("text/plain")
 	@Produces("application/json")
-	public List<Bond> getBsmBondData(String bsq) {
+	public List<EBond> getBsmBondData(String bsq) {
 
 		System.out.println("in BondResource BSM POST");
 		// System.out.println("Entered JSON: " + bsq);
@@ -72,7 +73,7 @@ public class BondResource {
 
 	@POST // from Trade Booking Screen
 	@Path("/TBS")
-	@Consumes({ "application/json", "text/plain" })
+	@Consumes({ "text/plain" })
 	@Produces({ "application/json" })
 	public void acceptOrder(Bond b) {
 		//fetches data as an entity bean BookedBond, so it needs no Json String input (Auto Parsed)
@@ -80,6 +81,15 @@ public class BondResource {
 		bean.putBondData(b);
 		System.out.println("Received bond name:" + b.getBondName());
 
+	}
+	
+	@GET
+	@Path("/test")
+	@Produces({ "application/json" })
+	public List<EBond> testEbondAndBooked(){
+//		JsonReader jsonReader = Json.createReader(new StringReader(dat));
+//		JsonObject bsqJson = jsonReader.readObject();
+		return bean.getTestResult();
 	}
 
 }

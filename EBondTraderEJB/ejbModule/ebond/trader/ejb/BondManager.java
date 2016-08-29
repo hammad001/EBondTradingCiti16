@@ -1,5 +1,8 @@
 package ebond.trader.ejb;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -8,6 +11,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import ebond.trader.jpa.Bond;
+import ebond.trader.jpa.EBond;
 
 //This is an session bean
 @Stateless
@@ -41,12 +45,25 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 	}*/
 
 
-	public List<Bond> getBondResultSet(String isin, String creditRating, String couponRateFrom, String couponRateTo,
+	public List<EBond> getBondResultSet(String isin, String creditRating, String couponRateFrom, String couponRateTo,
 			String maturityDateFrom, String maturityDateTo, String frequency, String currency, String yeildFrom, String yeildTo, String lastPriceFrom, String lastPriceTo) {
 
 		String tempQuery = "SELECT b from EBond AS b ";// trailing spaces added
 														// to prevent accidental
 														// concat
+		String formatMDFrom = new String();
+		String formatMDTo = new String();
+		
+		try {
+			Date datef = new SimpleDateFormat("dd-MM-yyyy").parse(maturityDateFrom);
+			Date datet = new SimpleDateFormat("dd-MM-yyyy").parse(maturityDateTo);
+			formatMDFrom = new SimpleDateFormat("yyyy-MM-dd").format(datef);
+			formatMDTo = new SimpleDateFormat("yyyy-MM-dd").format(datet);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		int notNullCount = -1;
 
 		// blank query case
@@ -64,7 +81,7 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 			// begin with adding
 			// ISIN_________________________________________________
 			if (isin.length() != 0 && notNullCount == 0) {
-				tempQuery = tempQuery + "b.isin=" + isin;
+				tempQuery = tempQuery + "b.isin='" + isin+"'";
 				notNullCount++;// any non null String after this will have an
 								// AND clause before it
 			}
@@ -72,7 +89,7 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 			if (creditRating.length() != 0 && notNullCount == 0) {
 				// if isin is null,notNullCount is still 0 we proceed after
 				// WHERE
-				tempQuery = tempQuery + "b.creditRating=" + creditRating;
+				tempQuery = tempQuery + "b.creditRating='" + creditRating + "'";
 				notNullCount++;// any non null String after this will have an
 								// AND clause before it
 
@@ -80,7 +97,7 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 				// if isin is not null,notNullCount>0 we add an AND clause in
 				// between
 				tempQuery = tempQuery + " AND ";// safety spaces added
-				tempQuery = tempQuery + "b.creditRating=" + creditRating;
+				tempQuery = tempQuery + "b.creditRating='" + creditRating+"'";
 				notNullCount++;
 
 			}
@@ -97,12 +114,12 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 			}
 			// adding maturityDateFrom and To__________________________________
 			if (maturityDateFrom.length() != 0 && maturityDateTo.length() != 0 && notNullCount == 0) {
-				tempQuery = tempQuery + "b.maturityDate BETWEEN " + maturityDateFrom + " AND " + maturityDateTo;
+				tempQuery = tempQuery + "b.maturityDate BETWEEN '" + formatMDFrom + "' AND '" + formatMDFrom + "'";
 				notNullCount++;
 
 			} else if (maturityDateFrom.length() != 0 && maturityDateTo.length() != 0 && notNullCount > 0) {
 				tempQuery = tempQuery + " AND ";// safety spaces added
-				tempQuery = tempQuery + "b.maturityDate BETWEEN " + maturityDateFrom + " AND " + maturityDateTo;
+				tempQuery = tempQuery + "b.maturityDate BETWEEN '" + formatMDTo + "' AND '" + formatMDTo + "'";
 				notNullCount++;
 
 			}
@@ -127,7 +144,7 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 			if (currency.length() != 0 && notNullCount == 0) {
 				// if isin is null,notNullCount is still 0 we proceed after
 				// WHERE
-				tempQuery = tempQuery + "b.currency=" + currency;
+				tempQuery = tempQuery + "b.currency='" + currency+"'";
 				notNullCount++;// any non null String after this will have an
 								// AND clause before it
 
@@ -135,7 +152,7 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 				// if isin is not null,notNullCount>0 we add an AND clause in
 				// between
 				tempQuery = tempQuery + " AND ";// safety spaces added
-				tempQuery = tempQuery + "b.currency=" + currency;
+				tempQuery = tempQuery + "b.currency='" + currency+"'";
 				notNullCount++;
 				
 			}
@@ -163,10 +180,31 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 			}
 		}
 		System.out.println("Executed: " + tempQuery);
-		TypedQuery<Bond> query = em.createQuery(tempQuery, Bond.class);
+		TypedQuery<EBond> query = em.createQuery(tempQuery, EBond.class);
 
-		return (List<Bond>) query.getResultList();
+		return (List<EBond>) query.getResultList();
 	}
+	
+	public List<EBond> getTestResult(){
+		//String tempQuery = "Select eb from EBond AS eb WHERE eb.isin = 'TYE047'";
+		String tempQuery = "Select eb from EBond AS eb WHERE eb.lastPrice BETWEEN 200 AND 300";
+		//String tempQuery = "Select eb from EBond AS eb WHERE eb.maturityDate BETWEEN '2030-01-01' AND '2040-01-01'";
+//		String newdat = new String();
+//		
+//		try {
+//			Date date = new SimpleDateFormat("dd-MM-yyyy").parse(dat);
+//			newdat = new SimpleDateFormat("yyyy-MM-dd").format(date);
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		System.out.println(newdat);
+//		String tempQuery = "Select eb from EBond AS eb WHERE eb.maturityDate = '" + newdat + "'";
+		
+		TypedQuery<EBond> query = em.createQuery(tempQuery, EBond.class);
 
+		return (List<EBond>) query.getResultList();
+	}
 
 }
