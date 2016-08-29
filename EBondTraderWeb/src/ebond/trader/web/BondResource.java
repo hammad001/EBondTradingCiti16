@@ -94,6 +94,17 @@ public class BondResource {
 //		return bean.getResultFromQuery();
 //	}
 	
+//	@POST
+//	@Path("/test")
+//	@Consumes("text/plain")
+//	@Produces("application/json")
+//	public List<EBond> testFunction(String bsq){
+//		// imported javax.json for these classes
+//		JsonReader jsonReader = Json.createReader(new StringReader(bsq));
+//		JsonObject bsqJson = jsonReader.readObject();
+//		System.out.println("Entered ISIN: " + bsqJson.getString("isin"));
+//		return bean.getResultFromQuery(bsqJson.getString("isin"));
 //		return bean.getResultFromQuery();
+//	}
 
 }
