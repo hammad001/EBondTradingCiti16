@@ -9,6 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="BONDS")
+
 public class Bond {
 	
 	@Id
