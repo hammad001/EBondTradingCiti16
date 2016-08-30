@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="EBondTraderEJBClient/ejbModule"/>
+	<classpathentry kind="src" path="EBondTaderJPA/src"/>
+	<classpathentry kind="src" path="EBondTraderEJB/ejbModule"/>
+	<classpathentry kind="src" path="EBondTraderWeb/src"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

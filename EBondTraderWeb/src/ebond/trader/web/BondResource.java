@@ -18,9 +18,7 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 
 import ebond.trader.ejb.BondManagerLocal;
-
 import ebond.trader.jpa.BookedBond;
-
 import ebond.trader.jpa.EBond;
 
 @RequestScoped
@@ -47,16 +45,18 @@ public class BondResource {
 	@POST // from Bond Static Maintenance
 	@Consumes("text/plain")
 	@Produces("application/json")
+	@Path("/BSM")
 	public List<EBond> getBsmBondData(String bsq) {
 
-		//System.out.println("in BondResource BSM POST");
-		// System.out.println("Entered JSON: " + bsq);
+		System.out.println("in BondResource BSM POST");
+		System.out.println("BSM Received JSON: " + bsq);
 
 		// imported javax.json for these classes
-		JsonReader jsonReader = Json.createReader(new StringReader(bsq));
-		JsonObject bsqJson = jsonReader.readObject();
-		//System.out.println("Entered ISIN: " + bsqJson.getString("isin"));
-
+		// System.out.println("Entered Currency: " +
+		// bsqJson.getString("currency"));
+		JsonReader jsonReaderBSM = Json.createReader(new StringReader(bsq));
+		JsonObject bsqJson = jsonReaderBSM.readObject();
+		System.out.println("BSM Search Query ISIN: " + bsqJson.getString("isin"));
 
 		return bean.getBondResultSet(bsqJson.getString("isin"), bsqJson.getString("creditRating"),
 				bsqJson.getString("couponRateFrom"), bsqJson.getString("couponRateTo"),
@@ -69,6 +69,7 @@ public class BondResource {
 	@Path("/blotter")
 	//@Consumes("text/plain")//DO NOT ADD Consumes Annotation to a GET 
 	@Produces("application/json")
+	@Consumes("text/plain")
 	public List<BookedBond> getBookedBondData(@QueryParam("isin") @DefaultValue("") String blotterQ) {
 		// fetches data from BookedBondBeanList, so it needs no Json input
 						
@@ -81,28 +82,42 @@ public class BondResource {
 		
 	}
 
+
 	@POST // from Trade Booking Screen
 	@Path("/tbs")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
-	public void acceptBooking(BookedBond b) {
+	public void acceptBooking(String bookingParam) {
 		//fetches data as an entity bean BookedBond, so it needs no Json String input (Auto Parsed)
+		JsonReader jsonReaderBookingParam = Json.createReader(new StringReader(bookingParam));
+		JsonObject bookingParamJson = jsonReaderBookingParam.readObject();
+		
 		System.out.println("in BondResource TBS POST");
-		bean.putBookedBondData(b);
+		bean.putBookedBondData(bookingParamJson.getString("buySell"),bookingParamJson.getString("quantity"), bookingParamJson.getString("purchaseDate"));
 		//System.out.println("Received bond name:" + b.getBondName());
 
 	}
 	
-
-	@GET
-	@Path("/test")
-	@Produces({ "application/json" })
-	public List<EBond> testEbondAndBooked(){
-//		JsonReader jsonReader = Json.createReader(new StringReader(dat));
+	// A test function to test individual queries
+//	@GET
+//	@Path("/test")
+//	@Produces("application/json")
+//	public List<EBond> testFunction(){
+//		return bean.getResultFromQuery();
+//	}
+	
+//	@POST
+//	@Path("/test")
+//	@Consumes("text/plain")
+//	@Produces("application/json")
+//	public List<EBond> testFunction(String bsq){
+//		// imported javax.json for these classes
+//		JsonReader jsonReader = Json.createReader(new StringReader(bsq));
 //		JsonObject bsqJson = jsonReader.readObject();
-		return bean.getTestResult();
-	}
-
+//		System.out.println("Entered ISIN: " + bsqJson.getString("isin"));
+//		return bean.getResultFromQuery(bsqJson.getString("isin"));
+//		return bean.getResultFromQuery();
+//	}
 	
 	@GET // from Trade Booking Screen
 	@Path("/tbs")
@@ -117,5 +132,27 @@ public class BondResource {
 	}
 
 	
+	/*public void acceptJsonBooking(String booking) {
+		//fetches data as an entity bean BookedBond, so it needs no Json String input (Auto Parsed)
+		System.out.println("in BondResource TBS POST");
+		System.out.println("BSM Received JSON: " + booking);
+
+		// imported javax.json for these classes
+		JsonReader jsonReaderBSM = Json.createReader(new StringReader(booking));
+		JsonObject bsqJson = jsonReaderBSM.readObject();
+		System.out.println("BSM Search Query ISIN: " + bsqJson.getString("isin"));
+
+		return bean.placeBooking(bsqJson.getString("orderId"), bsqJson.getString("bondId"),
+				bsqJson.getString("buySell"), bsqJson.getString("quantity"),
+				bsqJson.getString("isin"), bsqJson.getString("issuedBy"),
+				bsqJson.getString("couponRate"), bsqJson.getString("couponFrequency"), bsqJson.getString("maturityDate"), bsqJson.getString("yeildTo"), bsqJson.getString("lastPriceFrom"), bsqJson.getString("lastPriceTo"));
+		// return bean.getBondData();
+
+		
+		
+		//bean.putBookedBondData(b);
+		//System.out.println("Received bond name:" + b.getBondName());
+
+	}*/
 	
 }
