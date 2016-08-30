@@ -244,8 +244,26 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 
 	}
 
-	public void putBookedBondData(BookedBond bondData) {
-		em.persist(bondData);
+	public void putBookedBondData(String buySell, String quantity, String purchaseDate, String bondId) {
+		
+		int quantityInt =  Integer.parseInt(quantity);
+		int bondIdLookup = Integer.parseInt(bondId);
+		char buySellChar = buySell.charAt(0);
+		
+		try {
+			Date dateInter = new SimpleDateFormat("dd-MM-yyyy").parse(purchaseDate);
+			java.sql.Date formatPdate = new java.sql.Date(dateInter.getTime());
+			BookedBond bookedbond = new BookedBond(buySellChar,quantityInt,formatPdate);
+			bookedbond.setEbond(em.find(EBond.class, bondIdLookup));
+			em.persist(bookedbond);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+		
+
 	}
 
 

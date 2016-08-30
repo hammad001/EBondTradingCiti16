@@ -45,7 +45,7 @@ public class BondResource {
 	@POST // from Bond Static Maintenance
 	@Consumes("text/plain")
 	@Produces("application/json")
-	@Path("/BSM")
+	@Path("/bsm")
 	public List<EBond> getBsmBondData(String bsq) {
 
 		System.out.println("in BondResource BSM POST");
@@ -85,7 +85,7 @@ public class BondResource {
 
 	@POST // from Trade Booking Screen
 	@Path("/tbs")
-	@Consumes({ "application/json" })
+	@Consumes({ "text/plain" })
 	@Produces({ "application/json" })
 	public void acceptBooking(String bookingParam) {
 		//fetches data as an entity bean BookedBond, so it needs no Json String input (Auto Parsed)
@@ -93,7 +93,7 @@ public class BondResource {
 		JsonObject bookingParamJson = jsonReaderBookingParam.readObject();
 		
 		System.out.println("in BondResource TBS POST");
-		bean.putBookedBondData(bookingParamJson.getString("buySell"),bookingParamJson.getString("quantity"), bookingParamJson.getString("purchaseDate"));
+		bean.putBookedBondData(bookingParamJson.getString("buySell"),bookingParamJson.getString("quantity"), bookingParamJson.getString("purchaseDate"), bookingParamJson.getString("bondId"));
 		//System.out.println("Received bond name:" + b.getBondName());
 
 	}

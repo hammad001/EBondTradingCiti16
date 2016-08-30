@@ -11,7 +11,7 @@ import ebond.trader.jpa.EBond;
 @Remote
 public interface BondManagerRemote {
 	//	public List<EBond> getResultFromQuery(String param);  // Test Function for queries
-	void putBookedBondData(String buySell, String quantity, String purchaseDate);
+	void putBookedBondData(String buySell, String quantity, String purchaseDate, String bondId);
 
 	List<EBond> getBondData();
 
