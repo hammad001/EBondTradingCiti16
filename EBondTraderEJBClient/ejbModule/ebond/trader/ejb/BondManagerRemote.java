@@ -10,9 +10,8 @@ import ebond.trader.jpa.EBond;
 
 @Remote
 public interface BondManagerRemote {
-	void putBondData(EBond bondData);
 	//	public List<EBond> getResultFromQuery(String param);  // Test Function for queries
-	void putBookedBondData(BookedBond bondData);
+	void putBookedBondData(String buySell, String quantity, String purchaseDate);
 
 	List<EBond> getBondData();
 

@@ -86,12 +86,15 @@ public class BondResource {
 
 	@POST // from Trade Booking Screen
 	@Path("/TBS")
-	@Consumes({ "application/json" })
+	@Consumes({ "text/plain" })
 	@Produces({ "application/json" })
-	public void acceptBooking(BookedBond b) {
+	public void acceptBooking(String bookingParam) {
 		//fetches data as an entity bean BookedBond, so it needs no Json String input (Auto Parsed)
+		JsonReader jsonReaderBookingParam = Json.createReader(new StringReader(bookingParam));
+		JsonObject bookingParamJson = jsonReaderBookingParam.readObject();
+		
 		System.out.println("in BondResource TBS POST");
-		bean.putBookedBondData(b);
+		bean.putBookedBondData(bookingParamJson.getString("buySell"),bookingParamJson.getString("quantity"), bookingParamJson.getString("purchaseDate"));
 		//System.out.println("Received bond name:" + b.getBondName());
 
 	}
