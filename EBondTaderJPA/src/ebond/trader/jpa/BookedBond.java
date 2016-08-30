@@ -18,12 +18,11 @@ public class BookedBond implements Serializable {
 
 	@Id
 	private int orderId;
-	private int bondId;
 	private char buySell;
 	private int quantity;
 	private Date purchaseDate;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name="BondId")
 	private EBond ebond;
 	
@@ -31,9 +30,8 @@ public class BookedBond implements Serializable {
 		super();
 	}
 
-	public BookedBond(int bondId, char buySell, int quantity, Date purchaseDate) {
+	public BookedBond( char buySell, int quantity, Date purchaseDate) {
 		super();
-		this.bondId = bondId;
 		this.buySell = buySell;
 		this.quantity = quantity;
 		this.purchaseDate = purchaseDate;
@@ -45,14 +43,6 @@ public class BookedBond implements Serializable {
 
 	public void setOrderId(int orderId) {
 		this.orderId = orderId;
-	}
-
-	public int getBondId() {
-		return bondId;
-	}
-
-	public void setBondId(int bondId) {
-		this.bondId = bondId;
 	}
 
 	public char getBuySell() {
@@ -77,6 +67,14 @@ public class BookedBond implements Serializable {
 
 	public void setPurchaseDate(Date purchaseDate) {
 		this.purchaseDate = purchaseDate;
+	}
+
+	public EBond getEbond() {
+		return ebond;
+	}
+
+	public void setEbond(EBond ebond) {
+		this.ebond = ebond;
 	}
 	
 	

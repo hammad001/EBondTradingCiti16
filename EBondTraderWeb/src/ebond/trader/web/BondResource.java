@@ -18,7 +18,6 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 
 import ebond.trader.ejb.BondManagerLocal;
-import ebond.trader.jpa.Bond;
 import ebond.trader.jpa.BookedBond;
 import ebond.trader.jpa.EBond;
 
@@ -46,7 +45,7 @@ public class BondResource {
 	@POST // from Bond Static Maintenance
 	@Consumes("text/plain")
 	@Produces("application/json")
-	@Path("/BSM")
+	@Path("/bsm")
 	public List<EBond> getBsmBondData(String bsq) {
 
 		System.out.println("in BondResource BSM POST");
@@ -67,7 +66,7 @@ public class BondResource {
 	}
 
 	@GET // from Blotter
-	@Path("/Blotter")
+	@Path("/blotter")
 	//@Consumes("text/plain")//DO NOT ADD Consumes Annotation to a GET 
 	@Produces("application/json")
 	@Consumes("text/plain")
@@ -85,7 +84,7 @@ public class BondResource {
 
 
 	@POST // from Trade Booking Screen
-	@Path("/TBS")
+	@Path("/tbs")
 	@Consumes({ "text/plain" })
 	@Produces({ "application/json" })
 	public void acceptBooking(String bookingParam) {
@@ -94,7 +93,7 @@ public class BondResource {
 		JsonObject bookingParamJson = jsonReaderBookingParam.readObject();
 		
 		System.out.println("in BondResource TBS POST");
-		bean.putBookedBondData(bookingParamJson.getString("buySell"),bookingParamJson.getString("quantity"), bookingParamJson.getString("purchaseDate"),bookingParamJson.getString("bondId"));
+		bean.putBookedBondData(bookingParamJson.getString("buySell"),bookingParamJson.getString("quantity"), bookingParamJson.getString("purchaseDate"), bookingParamJson.getString("bondId"));
 		//System.out.println("Received bond name:" + b.getBondName());
 
 	}
@@ -121,7 +120,7 @@ public class BondResource {
 //	}
 	
 	@GET // from Trade Booking Screen
-	@Path("/TBS")
+	@Path("/tbs")
 	//@Consumes({ "text/plain" })//DO NOT ADD @Consumes Annotation to GET
 	@Produces({ "application/json" })
 	public EBond populateBooking(@QueryParam("isin") @DefaultValue("") String TbsIsinQ) {

@@ -1,51 +1,40 @@
 package ebond.trader.ejb;
 
-import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.ejb.*;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import ebond.trader.jpa.Bond;
 import ebond.trader.jpa.BookedBond;
 import ebond.trader.jpa.EBond;
 
 //This is an session bean
-@Remote(BondManagerRemote.	class)
-@Local(BondManagerLocal.class)
 @Stateless
 public class BondManager implements BondManagerRemote, BondManagerLocal {
+    
+	/**
+	 * Default constructor.
+	 */
+	public BondManager() {
+		// TODO Auto-generated constructor stub
+	}
 
-    /**
-     * Default constructor. 
-     */
-    public BondManager() {
-        // TODO Auto-generated constructor stub
-    }
-    
-    @PersistenceContext(unitName = "EBondTraderJPA-PU")
-    EntityManager em;
-    
-    public void putBookedBondData( String buySell, String quantity, String purchaseDate,String bondId){
-    	// Accept all the parametes from putBooking request as string and parse
-    	// to respective data types
-    	System.out.println("Retrieving Details from accepted Bond : "+buySell+","+quantity+","+purchaseDate);
-    	
-    	
-//    	em.persist(bondData);
-    }
-    
+	@PersistenceContext(unitName = "EBondTraderJPA-PU")
+	EntityManager em;
+
+
+
 	public List<EBond> getBondData() {
 		TypedQuery<EBond> query = em.createQuery("SELECT b" + " FROM EBond AS b", EBond.class);
 
 		return (List<EBond>) query.getResultList();
 	}
-    
+
 	public List<BookedBond> getBlotterBonds(String blotterQ) {
 
 		String tempQuery = "SELECT b FROM BookedBond AS b ";
@@ -60,22 +49,13 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 		return (List<BookedBond>) query.getResultList();
 	}
 
- 	
-//	public List<EBond> getBookedBonds() {
-//		TypedQuery<EBond> query = em.createQuery("SELECT b" + " FROM BookedBond AS b", EBond.class);
-//
-//		return (List<EBond>) query.getResultList();
-//	}
+	public List<EBond> getBondResultSet(String isin, String creditRating, String couponRateFrom, String couponRateTo,
 
-
-	public List<EBond> getBondResultSet(String isin, String creditRating, String couponRateFrom, String couponRateTo,String maturityDateFrom, String maturityDateTo, String frequency, String currency, String yeildFrom, String yeildTo, String lastPriceFrom, String lastPriceTo) {
+			String maturityDateFrom, String maturityDateTo, String frequency, String currency, String yeildFrom, String yeildTo, String lastPriceFrom, String lastPriceTo) {
 
 		String tempQuery = "SELECT b from EBond AS b ";// trailing spaces added
 														// to prevent accidental
 														// concat
-
-		int notNullCount = -1;
-
 		String formatMDFrom = new String();
 		String formatMDTo = new String();
 		
@@ -88,11 +68,15 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		int notNullCount = -1;
+
 
 		// blank query case
 		if (isin.length() == 0 && creditRating.length() == 0 && couponRateFrom.length() == 0
 				&& couponRateTo.length() == 0 && maturityDateFrom.length() == 0 && maturityDateTo.length() == 0
-				&& frequency.length() == 0 && currency.length() == 0) {
+				&& frequency.length() == 0 && currency.length() == 0 && yeildFrom.length() == 0
+				&& yeildFrom.length() == 0 && lastPriceFrom.length() == 0 && lastPriceTo.length() == 0) {
 			System.out.println("Search is null");
 
 		} else {
@@ -125,11 +109,11 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 
 			}
 			// adding couponRateFrom and To__________________________________
-			if (couponRateFrom.length() != 0 && couponRateTo.length()!=0 && notNullCount == 0) {
+			if (couponRateFrom.length() != 0 && couponRateTo.length() != 0 && notNullCount == 0) {
 				tempQuery = tempQuery + "b.couponRate BETWEEN " + couponRateFrom + " AND " + couponRateTo;
 				notNullCount++;
 
-			} else if (couponRateFrom.length() != 0 && couponRateTo.length()!=0 && notNullCount > 0) {
+			} else if (couponRateFrom.length() != 0 && couponRateTo.length() != 0 && notNullCount > 0) {
 				tempQuery = tempQuery + " AND ";// safety spaces added
 				tempQuery = tempQuery + "b.couponRate BETWEEN " + couponRateFrom + " AND " + couponRateTo;
 				notNullCount++;
@@ -179,6 +163,40 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 				notNullCount++;
 
 			}
+
+			if (yeildFrom.length() != 0 && yeildTo.length() != 0 && notNullCount == 0) {
+				tempQuery = tempQuery + "b.yeild BETWEEN " + yeildFrom + " AND " + yeildTo;
+				notNullCount++;
+
+			} else if (yeildFrom.length() != 0 && yeildTo.length() != 0 && notNullCount > 0) {
+				tempQuery = tempQuery + " AND ";// safety spaces added
+				tempQuery = tempQuery + "b.yeild BETWEEN " + yeildFrom + " AND " + yeildTo;
+				notNullCount++;
+
+			}
+
+			if (lastPriceFrom.length() != 0 && lastPriceTo.length() != 0 && notNullCount == 0) {
+				tempQuery = tempQuery + "b.lastPrice BETWEEN " + lastPriceFrom + " AND " + lastPriceTo;
+				notNullCount++;
+
+			} else if (lastPriceFrom.length() != 0 && lastPriceTo.length() != 0 && notNullCount > 0) {
+				tempQuery = tempQuery + " AND ";// safety spaces added
+				tempQuery = tempQuery + "b.lastPrice BETWEEN " + lastPriceFrom + " AND " + lastPriceTo;
+				notNullCount++;
+
+			}
+			// adding lastPriceFrom and To__________________________________
+			if (lastPriceFrom.length() != 0 && lastPriceTo.length() != 0 && notNullCount == 0) {
+				tempQuery = tempQuery + "b.lastPrice BETWEEN " + lastPriceFrom + " AND " + lastPriceTo;
+				notNullCount++;
+
+			} else if (lastPriceFrom.length() != 0 && lastPriceTo.length() != 0 && notNullCount > 0) {
+				tempQuery = tempQuery + " AND ";// safety spaces added
+				tempQuery = tempQuery + "b.lastPrice BETWEEN " + lastPriceFrom + " AND " + lastPriceTo;
+				notNullCount++;
+
+			}
+
 		}
 		System.out.println("Executed: " + tempQuery);
 		TypedQuery<EBond> query = em.createQuery(tempQuery, EBond.class);
@@ -210,26 +228,6 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 	}
 
 	
-	// Test method for queries
-	public List<EBond> getResultFromQuery(){
-		//String tempQuery = "SELECT b from EBond AS b WHERE b.isin='"+param+"'";// trailing spaces added
-		String tempQuery = "SELECT b from EBond AS b ";// trailing spaces added
-		TypedQuery<EBond> query = em.createQuery(tempQuery, EBond.class);
-		List<EBond> result = query.getResultList();
-			
-		// Formatting test 
-//		for(EBond e : result){
-//			SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
-//			String date = sdf.format(e.getMaturityDate());
-//			System.out.println(date); //15/10/2013
-//			
-//			break;
-//		}
-		return result;
-			
-	}
-
-	
 
 	public EBond populateTBS(String TbsIsinQ) {
 
@@ -246,6 +244,27 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 
 	}
 
+	public void putBookedBondData(String buySell, String quantity, String purchaseDate, String bondId) {
+		
+		int quantityInt =  Integer.parseInt(quantity);
+		int bondIdLookup = Integer.parseInt(bondId);
+		char buySellChar = buySell.charAt(0);
+		
+		try {
+			Date dateInter = new SimpleDateFormat("dd-MM-yyyy").parse(purchaseDate);
+			java.sql.Date formatPdate = new java.sql.Date(dateInter.getTime());
+			BookedBond bookedbond = new BookedBond(buySellChar,quantityInt,formatPdate);
+			bookedbond.setEbond(em.find(EBond.class, bondIdLookup));
+			em.persist(bookedbond);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+		
+
+	}
 
 
 }

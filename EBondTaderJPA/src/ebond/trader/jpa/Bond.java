@@ -2,6 +2,8 @@ package ebond.trader.jpa;
 
 //This is an Entity Bean
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -34,7 +36,6 @@ public class Bond {
 	public String getBondName() {
 		return bondName;
 	}
-	
 	public void setBondName(String bondName) {
 		this.bondName = bondName;
 	}
