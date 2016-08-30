@@ -121,7 +121,6 @@ public class BondResource {
 	
 	@GET // from Trade Booking Screen
 	@Path("/tbs")
-	//@Consumes({ "text/plain" })//DO NOT ADD @Consumes Annotation to GET
 	@Produces({ "application/json" })
 	public EBond populateBooking(@QueryParam("isin") @DefaultValue("") String TbsIsinQ) {
 		//fetches data as an entity bean BookedBond, so it needs no Json String input (Auto Parsed)
