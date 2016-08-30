@@ -11,7 +11,7 @@ import ebond.trader.jpa.EBond;
 @Remote
 public interface BondManagerRemote {
 	//	public List<EBond> getResultFromQuery(String param);  // Test Function for queries
-	void putBookedBondData(String buySell, String quantity, String purchaseDate, String bondId);
+	String putBookedBondData(String buySell, String quantity, String bondId);
 
 	List<EBond> getBondData();
 
@@ -19,5 +19,5 @@ public interface BondManagerRemote {
 			String maturityDateFrom, String maturityDateTo, String frequency, String currency, String yeildFrom,
 			String yeildTo, String lastPriceFrom, String lastPriceTo);
 	List<BookedBond> getBlotterBonds(String blotterQ);
-	EBond populateTBS(String TbsIsinQ);
+	List<EBond> populateTBS(String TbsIsinQ);
 }

@@ -1,6 +1,7 @@
 package ebond.trader.web;
 
 import java.io.StringReader;
+import java.util.HashMap;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.naming.Context;
@@ -56,7 +57,7 @@ public class BondResource {
 		// bsqJson.getString("currency"));
 		JsonReader jsonReaderBSM = Json.createReader(new StringReader(bsq));
 		JsonObject bsqJson = jsonReaderBSM.readObject();
-		System.out.println("BSM Search Query ISIN: " + bsqJson.getString("isin"));
+		//System.out.println("BSM Search Query ISIN: " + bsqJson.getString("isin"));
 
 		return bean.getBondResultSet(bsqJson.getString("isin"), bsqJson.getString("creditRating"),
 				bsqJson.getString("couponRateFrom"), bsqJson.getString("couponRateTo"),
@@ -87,15 +88,19 @@ public class BondResource {
 	@Path("/tbs")
 	@Consumes({ "text/plain" })
 	@Produces({ "application/json" })
-	public void acceptBooking(String bookingParam) {
+	public HashMap<String, String> acceptBooking(String bookingParam) {
 		//fetches data as an entity bean BookedBond, so it needs no Json String input (Auto Parsed)
 		JsonReader jsonReaderBookingParam = Json.createReader(new StringReader(bookingParam));
 		JsonObject bookingParamJson = jsonReaderBookingParam.readObject();
 		
 		System.out.println("in BondResource TBS POST");
-		bean.putBookedBondData(bookingParamJson.getString("buySell"),bookingParamJson.getString("quantity"), bookingParamJson.getString("purchaseDate"), bookingParamJson.getString("bondId"));
-		//System.out.println("Received bond name:" + b.getBondName());
-
+		String response = bean.putBookedBondData(bookingParamJson.getString("buySell"),
+				bookingParamJson.getString("quantity"), bookingParamJson.getString("bondId"));
+		
+		// Getting success response as a string, Passing to a key value pair
+		HashMap<String, String> responseMap = new HashMap<>();
+		responseMap.put("status", response);
+		return responseMap;
 	}
 	
 	// A test function to test individual queries
@@ -122,7 +127,7 @@ public class BondResource {
 	@GET // from Trade Booking Screen
 	@Path("/tbs")
 	@Produces({ "application/json" })
-	public EBond populateBooking(@QueryParam("isin") @DefaultValue("") String TbsIsinQ) {
+	public List<EBond> populateBooking(@QueryParam("isin") @DefaultValue("") String TbsIsinQ) {
 		//fetches data as an entity bean BookedBond, so it needs no Json String input (Auto Parsed)
 		System.out.println("in BondResource TBS GET, Looking for: "+TbsIsinQ );
 		return bean.populateTBS(TbsIsinQ);
