@@ -16,7 +16,7 @@ import ebond.trader.jpa.BookedBond;
 import ebond.trader.jpa.EBond;
 
 //This is an session bean
-@Remote(BondManagerRemote.class)
+@Remote(BondManagerRemote.	class)
 @Local(BondManagerLocal.class)
 @Stateless
 public class BondManager implements BondManagerRemote, BondManagerLocal {
@@ -73,6 +73,7 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 		String tempQuery = "SELECT b from EBond AS b ";// trailing spaces added
 														// to prevent accidental
 														// concat
+
 		int notNullCount = -1;
 
 		String formatMDFrom = new String();
@@ -207,6 +208,7 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 
 		return (List<EBond>) query.getResultList();
 	}
+
 	
 	// Test method for queries
 	public List<EBond> getResultFromQuery(){
