@@ -14,7 +14,7 @@ import ebond.trader.jpa.EBond;
 public interface BondManagerLocal {
 	List<EBond> getBondData();
 //	public List<EBond> getResultFromQuery(String param);  //Test Function for queries
-	void putBookedBondData(String buySell, String quantity, String purchaseDate);
+	void putBookedBondData(String buySell, String quantity, String purchaseDate, String bondId);
 
 	List<EBond> getBondResultSet(String isin, String creditRating, String couponRateFrom, String couponRateTo,
 			String maturityDateFrom, String maturityDateTo, String frequency, String currency, String yeildFrom,

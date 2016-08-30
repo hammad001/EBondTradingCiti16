@@ -31,7 +31,7 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
     @PersistenceContext(unitName = "EBondTraderJPA-PU")
     EntityManager em;
     
-    public void putBookedBondData(String buySell, String quantity, String purchaseDate){
+    public void putBookedBondData( String buySell, String quantity, String purchaseDate,String bondId){
     	// Accept all the parametes from putBooking request as string and parse
     	// to respective data types
     	System.out.println("Retrieving Details from accepted Bond : "+buySell+","+quantity+","+purchaseDate);

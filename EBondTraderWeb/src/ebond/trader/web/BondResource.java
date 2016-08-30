@@ -94,7 +94,7 @@ public class BondResource {
 		JsonObject bookingParamJson = jsonReaderBookingParam.readObject();
 		
 		System.out.println("in BondResource TBS POST");
-		bean.putBookedBondData(bookingParamJson.getString("buySell"),bookingParamJson.getString("quantity"), bookingParamJson.getString("purchaseDate"));
+		bean.putBookedBondData(bookingParamJson.getString("buySell"),bookingParamJson.getString("quantity"), bookingParamJson.getString("purchaseDate"),bookingParamJson.getString("bondId"));
 		//System.out.println("Received bond name:" + b.getBondName());
 
 	}
