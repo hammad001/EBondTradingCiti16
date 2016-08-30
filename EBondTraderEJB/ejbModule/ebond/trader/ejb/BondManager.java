@@ -27,9 +27,7 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 	@PersistenceContext(unitName = "EBondTraderJPA-PU")
 	EntityManager em;
 
-	public void putBookedBondData(BookedBond bondData) {
-		em.persist(bondData);
-	}
+
 
 	public List<EBond> getBondData() {
 		TypedQuery<EBond> query = em.createQuery("SELECT b" + " FROM EBond AS b", EBond.class);
@@ -246,7 +244,9 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 
 	}
 
-
+	public void putBookedBondData(BookedBond bondData) {
+		em.persist(bondData);
+	}
 
 
 }

@@ -66,7 +66,7 @@ public class BondResource {
 	}
 
 	@GET // from Blotter
-	@Path("/Blotter")
+	@Path("/blotter")
 	//@Consumes("text/plain")//DO NOT ADD Consumes Annotation to a GET 
 	@Produces("application/json")
 	public List<BookedBond> getBookedBondData(@QueryParam("isin") @DefaultValue("") String blotterQ) {
@@ -82,7 +82,7 @@ public class BondResource {
 	}
 
 	@POST // from Trade Booking Screen
-	@Path("/TBS")
+	@Path("/tbs")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
 	public void acceptBooking(BookedBond b) {
@@ -105,7 +105,7 @@ public class BondResource {
 
 	
 	@GET // from Trade Booking Screen
-	@Path("/TBS")
+	@Path("/tbs")
 	//@Consumes({ "text/plain" })//DO NOT ADD @Consumes Annotation to GET
 	@Produces({ "application/json" })
 	public EBond populateBooking(@QueryParam("isin") @DefaultValue("") String TbsIsinQ) {
