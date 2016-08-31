@@ -29,5 +29,18 @@ IGNORE 1 lines
 (BondId,IssuedBy,ISIN,CouponRate,@var,High,Low,LastPrice,Yeild,ChangeInPrice,CreditRating,Currency,CouponFrequency)
 SET MaturityDate=STR_TO_DATE(@var,'%m/%d/%Y'); 
 
+update EBOND 
+SET IssueDate= date_SUB(MaturityDate, interval 40 YEAR);
+
+ALTER TABLE ebond
+drop column SettlementDays;
+
+ALTER TABLE ebond
+add column SettlementDays int;
+
+update EBOND 
+SET SettlementDays= FLOOR(4-RAND()*(4-2));
+
+
 
 

@@ -26,7 +26,7 @@ public class EBond implements Serializable {
 	
 	private String isin;
 	private Date issueDate;
-	private Date settlementDays;
+	private int settlementDays;
 	private int faceValue;
 	private double couponRate;
 	private char couponFrequency;
@@ -41,7 +41,7 @@ public class EBond implements Serializable {
 	
 
 	
-	public EBond(String isin, Date issueDate, Date settlementDays, int faceValue, double couponRate,
+	public EBond(String isin, Date issueDate, int settlementDays, int faceValue, double couponRate,
 			char couponFrequency, Date maturityDate, double lastPrice, double high, double low, double changeInPrice,
 			double yeild, String creditRating, String currency) {
 		super();
@@ -85,11 +85,11 @@ public class EBond implements Serializable {
 		this.issueDate = issueDate;
 	}
 
-	public Date getSettlementDays() {
+	public int getSettlementDays() {
 		return settlementDays;
 	}
 
-	public void setSettlementDays(Date settlementDays) {
+	public void setSettlementDays(int settlementDays) {
 		this.settlementDays = settlementDays;
 	}
 
