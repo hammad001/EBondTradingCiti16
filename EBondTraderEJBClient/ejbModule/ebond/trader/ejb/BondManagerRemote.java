@@ -1,5 +1,6 @@
 package ebond.trader.ejb;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.ejb.Remote;
@@ -20,4 +21,8 @@ public interface BondManagerRemote {
 			String yeildTo, String lastPriceFrom, String lastPriceTo);
 	List<BookedBond> getBlotterBonds(String blotterQ);
 	List<EBond> populateTBS(String TbsIsinQ);
+
+	// User Account related interface methods
+	public HashMap<String, String> registerUser(String name, String userName, String password);
+	public HashMap<String, String> loginUser(String userName, String password);
 }

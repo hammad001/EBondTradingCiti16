@@ -3,6 +3,7 @@ package ebond.trader.ejb;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -12,6 +13,7 @@ import javax.persistence.TypedQuery;
 
 import ebond.trader.jpa.BookedBond;
 import ebond.trader.jpa.EBond;
+import ebond.trader.jpa.UserAccount;
 
 //This is an session bean
 @Stateless
@@ -46,7 +48,59 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 
 		return (List<BookedBond>) query.getResultList();
 	}
-
+	
+	public HashMap<String, String> registerUser(String name, String userName, String password){
+		UserAccount userAcc = new UserAccount(name,userName,password);
+		HashMap<String, String> response = new HashMap<>();
+		String tempQuery = "SELECT u FROM UserAccount AS u where u.userName='"+userName+"'";
+		TypedQuery<UserAccount> query = em.createQuery(tempQuery,UserAccount.class);
+		if(query.getResultList().isEmpty()){
+			System.out.println("Registering : "+name+" with username : "+userName);
+			em.persist(userAcc);
+			if(em.contains(userAcc)){
+				response.put("status", "success");
+				return response;
+			}else{
+				response.put("status", "failure");
+				response.put("errorMsg", "Database Access Failure");
+				return response;
+			}
+		}else{
+			response.put("status", "failure");
+			response.put("errorMsg", "Username already exists");
+			return response;
+			// return "User already exists"    //
+		}
+		
+	}
+	
+	public HashMap<String, String> loginUser(String userName, String password){	
+		HashMap<String, String> response = new HashMap<>();
+		
+		String tempQuery = "SELECT u FROM UserAccount AS u where u.userName='"+userName+"'";
+		TypedQuery<UserAccount> query = em.createQuery(tempQuery,UserAccount.class);
+		
+		if(!query.getResultList().isEmpty()){
+			UserAccount userAccount = query.getSingleResult();
+			System.out.println("Database password : "+userAccount.getPassword()+" , Rest Password : "+password);
+			
+			if(userAccount.getPassword().equals(password)){
+				response.put("status", "success");
+				response.put("name", userAccount.getName());
+				return response;		
+			}else {
+				response.put("status", "failure");
+				response.put("errorMsg", "Invalid Password");
+				return response;
+			}
+		}else{
+			response.put("status", "failure");
+			response.put("errorMsg", "Username doesn't exist");
+			return response;
+		}
+		//UserAccount userAcc = em.find(UserAccount.class, userName);
+	}
+	
 	public List<EBond> getBondResultSet(String isin, String creditRating, String couponRateFrom, String couponRateTo,
 
 			String maturityDateFrom, String maturityDateTo, String frequency, String currency, String yeildFrom,

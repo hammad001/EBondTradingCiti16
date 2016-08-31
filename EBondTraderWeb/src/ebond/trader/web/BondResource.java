@@ -136,6 +136,33 @@ public class BondResource {
 		
 	}
 
+	@POST
+	@Path("/register")
+	@Consumes("text/plain")
+	@Produces("application/json")
+	public HashMap<String, String> userRegister(String registerParam){
+		
+		JsonReader jsonReaderRegisterParam = Json.createReader(new StringReader(registerParam));
+		JsonObject registerParamJson = jsonReaderRegisterParam.readObject();
+		
+		// checking the rest method
+		System.out.println("Entered in register method with param : "+registerParam);
+		return bean.registerUser(registerParamJson.getString("name"), registerParamJson.getString("userName"), registerParamJson.getString("password"));
+	}
+	
+	@POST
+	@Path("/login")
+	@Consumes("text/plain")
+	@Produces("application/json")
+	public HashMap<String, String> userLogin(String loginParam){
+		JsonReader jsonReaderLoginParam = Json.createReader(new StringReader(loginParam));
+		JsonObject loginParamJson = jsonReaderLoginParam.readObject();
+		
+		// checking the rest method
+		System.out.println("Entered in login method with param :"+loginParam);
+		return bean.loginUser(loginParamJson.getString("userName"), loginParamJson.getString("password"));		
+	}
+	
 	
 	/*public void acceptJsonBooking(String booking) {
 		//fetches data as an entity bean BookedBond, so it needs no Json String input (Auto Parsed)
