@@ -87,6 +87,7 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 			if(userAccount.getPassword().equals(password)){
 				response.put("status", "success");
 				response.put("name", userAccount.getName());
+				response.put("accountId", String.valueOf(userAccount.getAccountId()));
 				return response;		
 			}else {
 				response.put("status", "failure");
