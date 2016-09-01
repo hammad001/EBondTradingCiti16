@@ -1,0 +1,44 @@
+---*** API DOCUMENTATION ***---
+
+Rest Resource Class : BondResource.class
+Base Path : http://{IP_Address}:8080/EBondTraderWeb/rest/bond/
+
+Endpoints:
+
+./bsm
+Request type:	POST
+Consumes	: 	text/plain
+Produces 	: 	application/json
+Method 		:	getBsmBondData()
+Returns 	: 	List<EBond> as JSON
+Remarks 	: 	Accepts the search query params and return s list of EBond objects formatted as a JSON.
+				Used in the Bond Static Maintanence Screen to populate data as per the search query.
+		  
+./blotter/{accountId}
+Request type: 	GET
+Consumes 	: 	text/plain
+Produces 	: 	application/json
+Method 		: 	getBookedBondData()
+Returns 	: 	List<BookedBond> as JSON
+Remarks 	: 	Retrieves the data of all the booked bonds from the server of the specific account. To be used for populating 
+				Blotter with data. If search param is passed as a query, will retrieve all the matching results. 
+			
+./tbs
+Request type: 	POST
+Consumes 	: 	text/plain
+Produces 	: 	application/json
+Method 		: 	acceptBooking()
+Returns 	: 	void
+Remarks 	: 	Accepts the params sent from the Trade Booking Screen to the server and inserts in the database
+				Suggestion - Send a confirmation response from the server if done succesfully or not. Populate in the 
+				C# end as an alert.
+				
+./tbs
+Request type: 	GET
+Consumes 	: 	null but accepts a query as ?isin= appended to url
+Produces 	: 	application/json
+Method 		: 	populateBooking()
+Returns 	: 	EBond
+Remarks 	: 	Accepts the query param ISIN and send back the EBond object corresponding to the isin if exists.
+				If query param is null, all the bookedBond data will be sent.
+
