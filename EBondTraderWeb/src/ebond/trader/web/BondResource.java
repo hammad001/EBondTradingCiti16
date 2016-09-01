@@ -12,6 +12,7 @@ import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.json.Json;
@@ -53,8 +54,6 @@ public class BondResource {
 		System.out.println("BSM Received JSON: " + bsq);
 
 		// imported javax.json for these classes
-		// System.out.println("Entered Currency: " +
-		// bsqJson.getString("currency"));
 		JsonReader jsonReaderBSM = Json.createReader(new StringReader(bsq));
 		JsonObject bsqJson = jsonReaderBSM.readObject();
 		//System.out.println("BSM Search Query ISIN: " + bsqJson.getString("isin"));
@@ -67,20 +66,20 @@ public class BondResource {
 	}
 
 	@GET // from Blotter
-	@Path("/blotter")
+	@Path("/blotter/{accountId}")
 	//@Consumes("text/plain")//DO NOT ADD Consumes Annotation to a GET 
 	@Produces("application/json")
 	@Consumes("text/plain")
-	public List<BookedBond> getBookedBondData(@QueryParam("isin") @DefaultValue("") String blotterQ) {
+	public List<BookedBond> getBookedBondData(@PathParam("accountId") String accountId, 
+											  @QueryParam("isin") @DefaultValue("") String isin) {
 		// fetches data from BookedBondBeanList, so it needs no Json input
 						
-		System.out.println("in Blotter GET");
-		if(blotterQ.length()!=0){
-			System.out.println("Blotter Search Query ISIN: "+blotterQ);
+		System.out.println("in Blotter GET "+accountId+", isin = "+isin);
+		if(isin.length()!=0){
+			System.out.println("Blotter Search Query ISIN: "+isin);
 		}
 		
-		return bean.getBlotterBonds(blotterQ);
-		
+		return bean.getBlotterBonds(accountId, isin);
 	}
 
 
@@ -95,7 +94,7 @@ public class BondResource {
 		
 		System.out.println("in BondResource TBS POST");
 		String response = bean.putBookedBondData(bookingParamJson.getString("buySell"),
-				bookingParamJson.getString("quantity"), bookingParamJson.getString("bondId"));
+				bookingParamJson.getString("quantity"), bookingParamJson.getString("bondId"),bookingParamJson.getString("accountId"));
 		
 		// Getting success response as a string, Passing to a key value pair
 		HashMap<String, String> responseMap = new HashMap<>();

@@ -5,9 +5,6 @@ import java.util.List;
 
 import javax.ejb.Local;
 
-import ebond.trader.jpa.Bond;
-
-
 import ebond.trader.jpa.BookedBond;
 import ebond.trader.jpa.EBond;
 
@@ -15,12 +12,12 @@ import ebond.trader.jpa.EBond;
 public interface BondManagerLocal {
 	List<EBond> getBondData();
 //	public List<EBond> getResultFromQuery(String param);  //Test Function for queries
-	String putBookedBondData(String buySell, String quantity, String bondId);
+	String putBookedBondData(String buySell, String quantity, String bondId, String accountId);
 
 	List<EBond> getBondResultSet(String isin, String creditRating, String couponRateFrom, String couponRateTo,
 			String maturityDateFrom, String maturityDateTo, String frequency, String currency, String yeildFrom,
 			String yeildTo, String lastPriceFrom, String lastPriceTo);
-	List<BookedBond> getBlotterBonds(String blotterQ);
+	List<BookedBond> getBlotterBonds(String accountId,String isin);
 	List<EBond> populateTBS(String TbsIsinQ);
 	
 	// User Account related interface methods

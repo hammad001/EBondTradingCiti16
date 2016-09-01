@@ -35,12 +35,12 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 		return (List<EBond>) query.getResultList();
 	}
 
-	public List<BookedBond> getBlotterBonds(String blotterQ) {
-
-		String tempQuery = "SELECT b FROM BookedBond AS b ";
+	public List<BookedBond> getBlotterBonds(String accountId, String isin) {
+		//int accId = Integer.parseInt(accountId);
+		String tempQuery = "SELECT b FROM BookedBond AS b WHERE b.userAccount.accountId="+accountId;
 		// if blotterQ is not null, add a where clause, else execute as it is
-		if (blotterQ.length() != 0) {
-			tempQuery = tempQuery + " WHERE b.ebond.isin='" + blotterQ + "'";// add
+		if (isin.length() != 0) {
+			tempQuery = tempQuery + " AND b.ebond.isin='" + isin + "'";// add
 																				// quotes
 		}
 		System.out.println("Executed in Blotter: " + tempQuery);
@@ -300,18 +300,21 @@ public class BondManager implements BondManagerRemote, BondManagerLocal {
 
 	}
 
-	public String putBookedBondData(String buySell, String quantity, String bondId) {
+	public String putBookedBondData(String buySell, String quantity, String bondId, String accountId) {
 
 		int quantityInt = Integer.parseInt(quantity);
 		int bondIdLookup = Integer.parseInt(bondId);
 		char buySellChar = buySell.charAt(0);
+		int bookedByLookup = Integer.parseInt(accountId);
 
 		// Changed to get present Date/time from the server instead
 		Date presentDate = new Date();
 		java.sql.Date formatPdate = new java.sql.Date(presentDate.getTime());
-		BookedBond bookedbond = new BookedBond(buySellChar, quantityInt, formatPdate);
+		BookedBond bookedbond = new BookedBond(buySellChar, quantityInt, formatPdate);  // Change as per user details IMPORTANT
 		bookedbond.setEbond(em.find(EBond.class, bondIdLookup));
-		em.persist(bookedbond);
+		bookedbond.setUserAccount(em.find(UserAccount.class, bookedByLookup));
+		if(em.find(EBond.class, bondIdLookup)!=null && em.find(UserAccount.class, bookedByLookup)!=null)
+				em.persist(bookedbond);
 		// Check for a case in which Booked bond has exactly same details.
 		if (em.contains(bookedbond)) {
 			return "Success";

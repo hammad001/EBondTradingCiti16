@@ -27,9 +27,9 @@ public class BookedBond implements Serializable {
 	private EBond ebond;
 	
 	@ManyToOne
-	@JoinColumn(name="accountId")
+	@JoinColumn(name="BookedBy")
 	private UserAccount userAccount;
-
+	
 	public BookedBond() {
 		super();
 	}
@@ -84,7 +84,6 @@ public class BookedBond implements Serializable {
 	public void setUserAccount(UserAccount userAccount){
 		this.userAccount = userAccount;
 	}
-	
 	
    
 }
